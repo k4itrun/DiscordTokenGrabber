@@ -6,6 +6,7 @@ aura.*
 
 # Ignore Node.js specific files and directories
 node_modules/
+test/
 npm-debug.log
 yarn-error.log
 
