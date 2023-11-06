@@ -1,0 +1,16 @@
+{
+    "name": "server",
+    "author": "k4itrun",
+    "version": "1.0.0",
+    "description": "*",
+    "main": "./index.js",
+    "license": "ISC",
+    "scripts": {},
+    "engines": {
+        "node": "20.x"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "express": "^4.18.2"
+    },"devDependencies": {}
+}
