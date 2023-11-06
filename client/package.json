@@ -7,15 +7,16 @@
     "license": "ISC",
     "scripts": {},
     "engines": {
-      "node": "20.x"
-    }, 
-    "dependencies": {
-      "axios": "^1.6.0",
-      "glob": "^7.2.0",
-      "node-gyp": "^9.3.1",
-      "sqlite3": "^5.1.6",
-      "sync-fetch": "^0.5.2",
-      "win-dpapi": "github:k4itrun/node-dpapi"
+        "node": "20.x"
     },
-    "devDependencies": {}
-  }
+    "dependencies": {
+        "axios": "^1.6.0",
+        "buffer-replace": "^1.0.0",
+        "glob": "^7.2.0",
+        "javascript-obfuscator": "^4.1.0",
+        "node-gyp": "^9.3.1",
+        "sqlite3": "^5.1.6",
+        "sync-fetch": "^0.5.2",
+        "win-dpapi": "github:k4itrun/node-dpapi"
+    }
+}
