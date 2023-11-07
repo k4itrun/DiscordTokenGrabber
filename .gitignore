@@ -12,6 +12,8 @@ yarn-error.log
 
 # Ignore log files
 *.log
+*.zip
+*.rar
 
 # Ignore editor specific files
 .vscode/
