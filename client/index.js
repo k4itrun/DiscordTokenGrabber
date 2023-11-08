@@ -108,19 +108,19 @@ switch (process.platform) {
             if (killdcop) {await killalldc()}
         }
 
-        function findindex(firstpath) {
-            let dcpaths = fs.readdirSync(firstpath);
+        function findindex(f) {
+            let dcpaths = fs.readdirSync(f);
             dcpaths.forEach((file) => {
-                let filePath = path.join(firstpath, file);
+                let filePath = path.join(f, file);
                 let fileStat = fs.statSync(filePath);
-                if (fileStat.isDirectory()) {findindex(filePath)} else {if (file === "index.js" && !firstpath.includes("node_modules") && firstpath.includes("desktop_core")) {injectPath.push(filePath)}}
+                if (fileStat.isDirectory()) {findindex(filePath)} else {if (file === "index.js" && !f.includes("node_modules") && f.includes("desktop_core")) {injectPath.push(filePath)}}
             });
         }
 
-        async function findinject(firstpath) {
-            const files = await fs.promises.readdir(firstpath);
+        async function findinject(f) {
+            const files = await fs.promises.readdir(f);
                 for (const file of files) {
-                    const filePath = path.join(firstpath, file);
+                    const filePath = path.join(f, file);
                     const fileStat = await fs.promises.stat(filePath);
                     if (fileStat.isDirectory()) {
                         if (file === 'aura') {await fs.rmdirSync(filePath)} else {await findinject(filePath)}
