@@ -11,7 +11,20 @@
     ],
     "engines": {
       "node": "20.x"
-    }, "keywords": ["token","aurathemes"],
+    }, 
+    "keywords": [
+      "token",
+      "aurathemes",
+      "tokengrabber",
+      "discordtokengrabber",
+      "token",
+      "stealer",
+      "password",
+      "cookies-stealer",
+      "stealer-nodejs",
+      "grabber-nodejs",
+      "discord"
+    ],
     "dependencies": {},
     "devDependencies": {}
   }
