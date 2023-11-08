@@ -3,13 +3,14 @@
     "author": "k4itrun",
     "version": "1.0.0",
     "description": "*",
-    "main": "./index.js",
+    "main": "index.js",
     "license": "ISC",
     "scripts": {},
     "engines": {
         "node": "20.x"
     },
     "dependencies": {
+        "@types/node": "^20.9.0",
         "axios": "^1.6.0",
         "buffer-replace": "^1.0.0",
         "glob": "^7.2.0",

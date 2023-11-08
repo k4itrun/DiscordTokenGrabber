@@ -3,13 +3,17 @@
     "author": "k4itrun",
     "version": "1.0.0",
     "description": "*",
-    "main": "./index.js",
+    "main": "index.js",
     "license": "ISC",
-    "scripts": {},
+    "scripts": { 
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
     "engines": {
         "node": "20.x"
     },
     "dependencies": {
+        "@types/node": "^20.9.0",
+        "node-fetch": "^3.2.6",
         "archiver": "^6.0.1",
         "axios": "^1.6.0",
         "body-parser": "^1.20.2",
