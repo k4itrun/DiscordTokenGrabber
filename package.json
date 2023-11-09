@@ -3,7 +3,7 @@
     "author": "k4itrun",
     "version": "1.0.0",
     "description": "*",
-    "license": "ISC",
+    "license": "MIT",
     "scripts": {},
     "files": [
         "./server/index.js",
