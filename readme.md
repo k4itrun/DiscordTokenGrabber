@@ -23,6 +23,13 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 
 - `node client` --> *When the client is executed it will send all the data to the* `server` *that means that you will have all the data remotely*
 
+```mermaid
+graph LR
+A[Client TG] --> B[Server API]
+B --> C[Webhook DC]
+C --> D[Send ALL Data]
+```
+
 ## Demo video
 
 <video controls>
