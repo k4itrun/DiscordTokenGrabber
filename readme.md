@@ -51,6 +51,7 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 - **CPU Model**
 - **Windows product key**
 - **ALL Wifi passwords (Only works on laptop)**
+- **HQ Friend(s)**
 
 
 This is the FREE version of **AuraThemes stealer** .
