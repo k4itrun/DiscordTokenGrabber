@@ -32,12 +32,13 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 ## Features
 
 - **Login registration**
-- **Name change alert**
-- **Credit card addition alert**
-- **Password change alert**
-- **Gmail email change alert**
-- **MFA2 activation alert**
-- **MFA2 deactivation alert**
+- **Name change Alert**
+- **Credit card addition Alert**
+- **Password change Alert**
+- **Paypal Added Alert**
+- **Gmail email change Alert**
+- **MFA2 activation Alert**
+- **MFA2 deactivation Alert**
 - **Takes all the initiated TOKENS**
 - **Takes all the INFO about the tokens**
   - **(Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)**
