@@ -23,6 +23,9 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 
 ## Demo video
 
+<video controls>
+  <source src=".github/doc/Tg.mp4" type="video/mp4">
+</video>
 
 ## Features
 
