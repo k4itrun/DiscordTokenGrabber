@@ -1,4 +1,6 @@
-# DiscordTokenGrabber
+# AuraThemes Stealer
+
+[Discord](https://discord.gg/gmGcexNxnU) | [Youtube](https://www.youtube.com/channel/UCYeaRFFvrE2MUPSUVpX-GCQ)
 
 ## Description
 
@@ -29,7 +31,28 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 
 ## Features
 
-I won't say them for now you can just investigate it for yourself.
+- **Login registration**
+- **Name change alert**
+- **Credit card addition alert**
+- **Password change alert**
+- **Gmail email change alert**
+- **MFA2 activation alert**
+- **MFA2 deactivation alert**
+- **Takes all the initiated TOKENS**
+- **Takes all the INFO about the tokens**
+  - **(Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)**
+- **IP address (public)**
+- **local IP address**
+- **Total RAM**
+- **PC Name**
+- **UUID**
+- **Windows MAC address**
+- **CPU Model**
+- **Windows product key**
+- **ALL Wifi passwords (Only works on laptop)**
+
+
+This is the FREE version of **AuraThemes stealer** .
 
 ## Disclaimer
 
