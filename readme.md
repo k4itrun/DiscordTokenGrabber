@@ -4,7 +4,7 @@
 
 ## Description
 
-Grabber token created in NodeJS with characteristics of a very powerful thief, this Grabber token is designed with an API that interacts directly with the client, thus sending registration packets like all the discord tokens and other things such as local IP, username , ram info etc...
+Token Grabber created in NodeJS with features of a very powerful thief, this Token Grabber works by simply adding a discord webhook with which it will already send all the discord tokens and other data like local IP, username , ram information, etc...
 
 This README provides a brief overview of what a token grabber is, its potential uses, and some ethical and legal considerations.
 
@@ -15,19 +15,11 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 ## Install
 - `git clone https://github.com/k4itrun/DiscordTokenGrabber.git`
 - `cd DiscordTokenGrabber`
-- `cd `
-    - `cd server` --> *simply if you enter the server you can start it on localhost, but it is preferable to host it on some vps or host*
 
-    - `cd client` --> *the client is simply the token grabber of all the tokens and all the information on the PC.*
-- `npm i npm@latest && npm i` or `npm i --force`
+> [!IMPORTANT]
+> Before running the `index.js` make sure you have to add your **webhook** at the top of the code in the `webhook` constant with that you will get the information sent to the webhook
 
-- `node client` --> *When the client is executed it will send all the data to the* `server` *that means that you will have all the data remotely*
-
-## Demo video
-
-<video controls>
-  <source src="https://github.com/k4itrun/DiscordTokenGrabber/raw/main/.github/doc/Tg.mp4" type="video/mp4">
-</video>
+- `node index.js` 
 
 ## Features
 

