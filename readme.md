@@ -20,29 +20,38 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 > Before running the `index.js` make sure you have to add your **webhook** at the top of the code in the `webhook` constant with that you will get the information sent to the webhook
 
 - `node index.js` 
+
 ## Features
 
-- **Login registration (Alert)**
-- **Name change (Alert)**
-- **Credit card addition (Alert)**
-- **Password change (Alert)**
-- **Paypal Added (Alert)**
-- **Gmail email change (Alert)**
-- **MFA2 activation (Alert)**
-- **MFA2 deactivation (Alert)**
-- **Takes all the initiated TOKENS**
-- **Takes all the INFO about the tokens**
-  - **(Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)**
-- **IP address (public)**
-- **local IP address**
-- **Total RAM**
-- **PC Name**
-- **UUID**
-- **Windows MAC address**
-- **CPU Model**
-- **Windows product key**
-- **ALL Wifi passwords (Only works on laptop)**
-- **HQ Friend(s)**
+*List of features of this simply easy token grabber*
+
+## User actions
+
+| Action                    | Description                                      | Alert (Of each action) |
+| --------------------------- | ------------------------------------------------ | -------------- |
+| `LOGIN`                     | Log in to discord                                | `✅ Yes`       |
+| `NAME`                 | Change username                                | `✅ Yes`       |
+| `CARD`             | Add credit card                            | `✅ Yes`        |
+| `PASSWORD`              | Change password                  | `✅ Yes`       |
+| `PAYPAL`                | Add paypal           | `✅ Yes`        |
+| `GMAIL`                | Change mail           | `✅ Yes`        |
+| `MFA2`                | Enabled or Disabled of MFA2           | `✅ Yes`        |
+
+## First execution
+
+| Steal                    | Description                                      |
+| --------------------------- | ------------------------------------------------ |
+| `TOKEN`                | Take all the initiated TOKENS           |
+| `TOKEN`                | Takes all the INFO about the TOKENS           |
+|                 | (Token, Badge(s), Email(s), Password(s), Nitro Type, HQ Friend(s), Payment Methods and more...)           |
+| `IP`                | Takes IP address (public)           |
+| `IP LOCAL`                | Takes IP address (Local)           |
+| `PC RAM`                | Takes RAM PC (KB)           |
+| `PC UUID`                | Takes UUID PC           |
+| `PC MAC`                | Takes Windows MAC address PC           |
+| `PC CPU`                | Takes CPU Model PC           |
+| `PC Windows Product`                | Takes Windows product key PC           |
+| `PC Wifi Passwords`                | Takes ALL Wifi passwords (Only works on laptop)           |
 
 
 This is the FREE version of **AuraThemes stealer** .
