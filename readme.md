@@ -20,7 +20,6 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 > Before running the `index.js` make sure you have to add your **webhook** at the top of the code in the `webhook` constant with that you will get the information sent to the webhook
 
 - `node index.js` 
-
 ## Features
 
 - **Login registration (Alert)**
