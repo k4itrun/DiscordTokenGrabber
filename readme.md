@@ -25,7 +25,7 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 
 *List of features of this simply easy token grabber*
 
-## User actions
+#### User actions
 
 | Action                    | Description                                      | Alert (Of each action) |
 | --------------------------- | ------------------------------------------------ | -------------- |
@@ -37,7 +37,9 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 | `GMAIL`                | Change mail           | `✅ Yes`        |
 | `MFA2`                | Enabled or Disabled of MFA2           | `✅ Yes`        |
 
-## First execution
+#### First execution
+
+*When the user runs the main file*
 
 | Steal                    | Description                                      |
 | --------------------------- | ------------------------------------------------ |
