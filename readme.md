@@ -58,7 +58,7 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 
 This is the FREE version of **AuraThemes stealer** .
 
-## Features End
+## Features end
 
 ## Disclaimer
 
