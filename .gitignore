@@ -3,6 +3,7 @@
 Thumbs.db
 token.*
 aura.*
+test.*
 
 # Ignore Node.js specific files and directories
 node_modules/
