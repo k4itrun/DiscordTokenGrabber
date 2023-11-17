@@ -45,7 +45,7 @@ Token grabbers work by intercepting and capturing tokens as they are transmitted
 | --------------------------- | ------------------------------------------------ |
 | `TOKEN`                | Take all the initiated TOKENS           |
 | `TOKEN`                | Takes all the INFO about the TOKENS           |
-|                 | (Token, Badge(s), Email(s), Password(s), Nitro Type, HQ Friend(s), Payment Methods and more...)           |
+|                 | (Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)           |
 | `IP`                | Takes IP address (public)           |
 | `IP LOCAL`                | Takes IP address (Local)           |
 | `PC RAM`                | Takes RAM PC (KB)           |
