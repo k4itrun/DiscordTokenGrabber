@@ -30,8 +30,7 @@ switch (process.platform) {
           sendall();
           fs.readdirSync(__dirname).forEach((a) => {
             if (a.endsWith(".xml")) {
-              f = path.join(__dirname, a);
-              fs.unlinkSync(f);
+              fs.unlinkSync(path.join(__dirname, a));
             }
           });
         }

