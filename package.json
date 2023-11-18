@@ -7,7 +7,7 @@
     "license": "MIT",
     "scripts": {
         "start": "node index",
-        "install": "npm install -g node-gyp@latest && npm i github:k4itrun/node-dpapi"
+        "install": "npm install -g node-gyp@latest && npm i node-gyp@latest"
     },
     "engines": {
         "node": "20.x"

