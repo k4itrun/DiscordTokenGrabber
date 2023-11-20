@@ -53,45 +53,31 @@ node index.js
 
 | Action                    | Description                                      | Avatible |
 | --------------------------- | ------------------------------------------------ | -------------- |
-| `LOGIN`                     | Log in to discord                                | ✅       |
-| `NAME`                 | Change username                                | ✅       |
-| `CARD`             | Add credit card                            | ✅        |
-| `PASSWORD`              | Change password                  | ✅       |
-| `PAYPAL`                | Add paypal           | ✅        |
-| `GMAIL`                | Change mail           | ✅        |
-| `MFA2`                | Enabled or Disabled of MFA2           | ✅        |
-| `TOKEN`                | Take all the initiated TOKENS and Takes all the INFO about the TOKENS          | ✅        |
+| `Log In`                     | Log in to discord                                | ✅       |
+| `User Name`                 | Change username                                | ✅       |
+| `Credit Card`             | Add credit card                            | ✅        |
+| `Password`              | Change password                  | ✅       |
+| `Paypal Method`                | Add paypal           | ✅        |
+| `Gmail/Mail`                | Change mail           | ✅        |
+| `Mfa2 (Alert)`                | Enabled or Disabled of MFA2           | ✅        |
+| `Steal Token`                | Take all the initiated TOKENS and Takes all the INFO about the TOKENS          | ✅        |
 |                 | (Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)           | ✅        |
-| `IP`                | Takes IP address (public)           | ✅        |
-| `IP LOCAL`                | Takes IP address (Local)           | ✅        |
-| `PC RAM`                | Takes RAM PC (KB)           | ✅        |
-| `PC UUID`                | Takes UUID PC           | ✅        |
-| `PC MAC`                | Takes Windows MAC address PC           | ✅        |
-| `PC CPU`                | Takes CPU Model PC           | ✅        |
-| `PC Windows Product`                | Takes Windows product key PC           | ✅        |
+| `Ip Address (Public/Local)`                | Takes IP address (public)/Takes IP address (Local)           | ✅        |
+| `Info PC (UUID/MAC/CPU/GPU) & PC Windows Product`                | Takes RAM PC (KB)/Takes UUID PC/Takes Windows MAC address PC/Takes CPU Model PC...           | ✅        |
 | `PC Wifi Passwords`                | Takes ALL Wifi passwords (Only works on laptop)           | ✅        |
-| `Discord Backup Codes`                | It takes them on the first execution and when it does it again           | 💜        |
+| `Stealer Game(s)`                | Steal EpicGame/Minecraft/Roblox and more...           | 💜        |
+| `Stealer File(s)`                | Steal Files Session & URL(s)           | 💜        |
+| `Discord Backup Codes (Injection)`                | It takes them on the first execution and when it does it again           | 💜        |
 | `Discord Bot Builder`                | Discord bot to create each unique key and to create executable files created in discord.js@14           | 💜        |
-| `API Rest`                | API in express to interact with the injection and have a unique key in each request           | 💜        |
-| `Cookie Stealer`                | Take all cookies from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
-| `Password Stealer`                | Take all passwords from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
-| `Credit Card(s) Stealer`                | Take all Credit Card(s) from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
-| `AutoFill Stealer`                | Take all AutoFill from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
-| `Social App(s)`                | Take all the records from social applications such as (discord, facebook, instagram, etc...)           | 💜        |
-| `History`                | Take all History from all browsers (chrome, edge, firefox, tor, etc...)           | 💜        |
-| `Download(s)`                | Gather each download from the victim's PC each downloaded file with the download origin source           | 💜        |
-| `Bookmark(s)`                | Taking all the possible browsers mentioned above           | 💜        |
-| `Client(s)`                | Filezilla and a lot more...           | 💜        |
-| `Game(s)`                | Minecraft, Roblox and a lot more...           | 💜        |
-| `Log(s)`                | Error log of some anti debuger action           | 💜        |
-| `Log(s)`                | Error log of some anti debuger action           | 💜        |
-| `PC Stealer`                | Takes data from the PC such as (antivirus (turns it off), passwords, clipboard, system info all, full screenshot etc...)           | 💜        |
-| `Wallets`                | Steal all cryptocurrency wallets bitcoin, ether, etc... (add an extension to chrome)           | 💜        |
-| `Anti VM`                | Does not run in virtual machines           | 💜        |
-| `Chrome Injection`                | Chrome Injection Bypass          | 💜        |
-| `Discord Injection`                | Alert for each action (login, change username/email/password/codes)          | 💜        |
-| `Browsers ALL`                |  Steal Browsers Credentials          | 💜        |
-| `Exodus Stealer ALL`                |  Steal Exodus Credentials          | 💜        |
+| `API Rest`                | API to interact with the client in each action           | 💜        |
+| `Bypass Discord Token Protection or Better Discord`                | Break Discord Security against Token Protection           | 💜        |
+| `Inject Exodus & Atomic & Discord`                | Full injection to Exodus/Automic/Discord           | 💜        |
+| `Discord Token Grabber (for all apps)`                | Steal all Tokens from all possible applications           | 💜        |
+| `Stealer Steal System Informations (More..) & Take a Screenshot/Startup etc...`                | More information about the PC location etc...           | 💜        |
+| `Anti Debug/Firewall/VM`                | Anti Debugger, virtual machines, firewall etc... (this is to avoid testing)           | 💜        |
+| `You (Close) all processes/Debug Killer`                | Eliminate all processes in one second (All Kill)           | 💜        |
+| `Stealer Wallets App(s) & Wallet Extension(s)`                | Steal all the App(s) crypto wallets & Steal any extension found from a wallet as well as all extensions such as google authenticator          | 💜        |
+| `Stealer OpenVPN/ProtonVPN/NordVPN/VPNPremium`                | VPN Nord/Open/Proton grabber...           | 💜        |
 
 - If you want information about the premium version, contact me. 
 
