@@ -42,6 +42,7 @@
     "network": "^0.6.1",
     "node-gyp": "^10.0.1",
     "sqlite3": "^5.1.6",
+    "sync-fetch": "^0.5.2",
     "win-dpapi": "^1.1.0"
   },
   "devDependencies": {

