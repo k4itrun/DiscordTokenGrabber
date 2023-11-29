@@ -1,4 +1,5 @@
 const axios = require("axios");
+const process = require("process");
 const getconfig = require("./config/config")();
 
 switch (process.platform) {

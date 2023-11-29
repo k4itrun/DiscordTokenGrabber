@@ -1,4 +1,5 @@
 require("dotenv").config();
+const process = require("process");
 
 module.exports = function getconfig() {
     return {
