@@ -33,21 +33,12 @@ git clone https://github.com/k4itrun/DiscordTokenGrabber.git
 ```bash
 cd DiscordTokenGrabber
 ```
-</br>
 
-> [!IMPORTANT]
-> Before running the `index.js` make sure you have to add your **webhook** at the top of the code in the `webhook` constant with that you will get the information sent to the webhook
-
-</br>
+- Go to the [configuration](config/config.js) folder and add your webhook, when you add it simply initialize it
 
 ```bash
 node index.js
 ```
-
-## Usage
-
-- *As I mentioned before (you have to add the webhook for the logs), so once you do that just run it*
-    - *In the `index.js` file on line (14) is the variable, paste your webhook inside, with that it will work, you can simply build the code and send it to your friend*
 
 ## Features
 
