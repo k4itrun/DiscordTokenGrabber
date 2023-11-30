@@ -31,7 +31,6 @@
   ],
   "dependencies": {
     "@types/node": "^20.9.0",
-    "asar": "^3.2.0",
     "axios": "^1.6.2",
     "buffer-replace": "^1.0.0",
     "colors": "^1.4.0",
@@ -39,11 +38,10 @@
     "discord.js-token": "^1.0.1",
     "dotenv": "^16.3.1",
     "javascript-obfuscator": "^4.1.0",
-    "network": "^0.6.1",
+    "node-fetch": "^3.3.2",
     "node-gyp": "^10.0.1",
     "sqlite3": "^5.1.6",
-    "sync-fetch": "^0.5.2",
-    "win-dpapi": "^1.1.0"
+    "sync-fetch": "^0.5.2"
   },
   "devDependencies": {
     "eslint": "^8.54.0",

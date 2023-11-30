@@ -1,18 +1,18 @@
 const { EmbedBuilder } = require('discord.js');
-const axios = require("axios");
+const fetch = require('sync-fetch');
 
 module.exports = {
     fetchServers: async function (x) {
         try {
-            let _ = await axios({
-                url: `https://discord.com/api/v9/users/@me/guilds?with_counts=true`,
-                method: "GET",
+            let _ = fetch(`https://discord.com/api/v9/users/@me/guilds?with_counts=true`, {
                 headers: {
                     Authorization: x,
                 },
             });
 
-            let servers = _.data
+            const data = await _.json();
+
+            let servers = data
                 .filter((__) => __.owner || (__.permissions & 8) === 8)
                 .filter((__) => __.approximate_member_count >= 500)
                 .map((__) => ({

