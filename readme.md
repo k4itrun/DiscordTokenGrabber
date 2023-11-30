@@ -79,8 +79,12 @@ node index.js
 
 - If you want information about the premium version, contact me. 
 
-## Preview
-- Coming soon...
+## Screenshots
+
+<img src="assets/11.png" width="500">
+<img src="assets/22.png" width="500">
+<img src="assets/33.png" width="500">
+<img src="assets/44.png" width="500">
 
 ## Disclaimer
 
