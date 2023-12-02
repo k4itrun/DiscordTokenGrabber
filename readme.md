@@ -19,11 +19,11 @@
 
 Token Grabber created in NodeJS with features of a very powerful thief, this Token Grabber works by simply adding a discord webhook with which it will already send all the discord tokens and other data like local IP, username , ram information, etc...
 
-This README provides a brief overview of what a token grabber is, its potential uses, and some ethical and legal considerations.
+This README provides a brief overview of what a token grabber is, its potential uses, and some ethical and legal considerations. 📄
 
 ## How Token Grabbers Work
 
-Token grabbers work by intercepting and capturing tokens as they are transmitted between a client and a server. This interception can occur through various means, such as exploiting vulnerabilities, man-in-the-middle attacks, or through malicious software or scripts injected into a user's device.
+Token grabbers work by intercepting and capturing tokens as they are transmitted between a client and a server. This interception can occur through various means, such as exploiting vulnerabilities, man-in-the-middle attacks, or through malicious software or scripts injected into a user's device. 📂
 
 # important 
 - **50** damn stars to this repository and add cookie session ⭐
@@ -47,38 +47,27 @@ node index.js
 
 - List of features of this simply easy Token Grabber (✅).
 - List of features Premium (💜). 
-
-| Action                    | Description                                      | Avatible |
-| --------------------------- | ------------------------------------------------ | -------------- |
-| `Log In`                     | Log in to discord                                | ✅       |
-| `User Name`                 | Change username                                | ✅       |
-| `Credit Card`             | Add credit card                            | ✅        |
-| `Password`              | Change password                  | ✅       |
-| `Paypal Method`                | Add paypal           | ✅        |
-| `Gmail/Mail`                | Change mail           | ✅        |
-| `Mfa2 (Alert)`                | Enabled or Disabled of MFA2           | ✅        |
-| `Steal Token`                | Take all the initiated TOKENS and Takes all the INFO about the TOKENS          | ✅        |
-|                 | (Token, Badge(s), Email(s), Password(s), Nitro Type, Payment Methods and more...)           | ✅        |
-| `Ip Address (Public/Local)`                | Takes IP address (public)/Takes IP address (Local)           | ✅        |
-| `Info PC (UUID/MAC/CPU/GPU) & PC Windows Product`                | Takes RAM PC (KB)/Takes UUID PC/Takes Windows MAC address PC/Takes CPU Model PC...           | ✅        |
-| `PC Wifi Passwords`                | Takes ALL Wifi passwords (Only works on laptop)           | ✅        |
-| `Anti VM`                | It will not run in a Virtual Machine (premium)           | ✅        |
-| `Stealer Game(s)`                | Steal EpicGame/Minecraft/Roblox and more...           | 💜        |
-| `Stealer File(s)`                | Steal Files Session & URL(s)           | 💜        |
-| `Discord Backup Codes (Injection)`                | It takes them on the first execution and when it does it again           | 💜        |
-| `Discord Bot Builder`                | Discord bot to create each unique key and to create executable files created in discord.js@14           | 💜        |
-| `API Rest`                | API to interact with the client in each action           | 💜        |
-| `Bypass Discord Token Protection or Better Discord`                | Break Discord Security against Token Protection           | 💜        |
-| `Inject Exodus & Atomic & Discord`                | Full injection to Exodus/Automic/Discord           | 💜        |
-| `Discord Token Grabber (for all apps)`                | Steal all Tokens from all possible applications           | 💜        |
-| `Stealer Steal System Informations (More..) & Take a Screenshot/Startup etc...`                | More information about the PC location etc...           | 💜        |
-| `Anti Debug/Firewall/VM`                | Anti Debugger, virtual machines, firewall etc... (this is to avoid testing)           | 💜        |
-| `You (Close) all processes/Debug Killer`                | Eliminate all processes in one second (All Kill)           | 💜        |
-| `Stealer Wallets App(s) & Wallet Extension(s)`                | Steal all the App(s) crypto wallets & Steal any extension found from a wallet as well as all extensions such as google authenticator          | 💜        |
-| `Stealer OpenVPN/ProtonVPN/NordVPN/VPNPremium`                | VPN Nord/Open/Proton grabber...           | 💜        |
-| `Exodus/Metamask Passphrase & password`                | Stealer Exodus/Metamask Passphrase and Passwords Wallet           | 💜        |
-| `Stealer Session (Roblox/Twitter/Telegram/Instagram/Facebook)`                | Steal the sessions from the aforementioned           | 💜        |
-| `Stealer Credits Cards/Passwords/Cookies/AutoFillData`                |  Steals all possible browsers Firefox/Tor/Edge/Chrome etc, etc...           | 💜        |
+    - **Bypass AntiVM** It does not run in a virtual machine in case of testing ✅
+    - **Steal all viewed tokens Discord** (application and browsers) ✅
+    - **Steal Info PC** (Ip Address Public/Local, UUID, CPU, GPU), Windows Product Key, Windows Mac Address & Wifi Password(s) ✅
+    - **Execution alerts (Injection) Discord** Changes (Pass, Mail, Username, Login, Added Card, Paypal, ~~Codes MFA2~~) ✅
+    - **Exodus and Atomic (Injection)** 💜
+    - **Chrome and Mullvad VPN (Injection)** 💜
+    - **Stealer Game(s), File(s)** Steal all information from games like (Roblox, Minecraft), Also in case of files it steals all relevant files from the PC 💜
+    - **Bot Builder & API** Bot to build the code and turn it into an executable with API etc. 💜
+    - **Bypass Discord Token Protection or Better Discord** Break Discord Security against Token Protection 💜
+    - **Inject Exodus & Atomic & Discord** 💜
+    - **Stealer Steal System Informations (More..) & Take a Screenshot/Startup etc...** 💜
+    - **Anti Debug/Firewall/VM** 💜
+    - **You (Close) all processes/Debug Killer** 💜
+    - **Stealer Wallets App(s) & Wallet Extension(s)** 💜
+    - **Stealer VPN(s)** OpenVPN, ProtonVPN, NordVPN 💜
+    - **Stealer Wallets** Exodus/Metamask Passphrase & Password 💜
+    - **Stealer Session (Roblox, Twitter, Telegram, Instagram)** 💜
+    - **Stealer Credits Cards, Passwords, Cookies, AutoFillData, Downloads** 💜
+    - **0/64 Detections** Very difficult to be detected 💜
+    - **You can modify copyright, description, icon, name...** 💜
+    - **Blocks the use of QR codes for login, Prevents requests to view devices** 💜
 
 - If you want information about the premium version, contact me. 
 
