@@ -25,6 +25,9 @@ This README provides a brief overview of what a token grabber is, its potential 
 
 Token grabbers work by intercepting and capturing tokens as they are transmitted between a client and a server. This interception can occur through various means, such as exploiting vulnerabilities, man-in-the-middle attacks, or through malicious software or scripts injected into a user's device.
 
+# important 
+- **50** damn stars to this repository and add cookie session ⭐
+
 ## Installation
 - Follow these steps so you can have it
 ```bash
