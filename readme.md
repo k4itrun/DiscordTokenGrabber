@@ -1,4 +1,4 @@
-<p align="center">
+<!-- <p align="center">
     <img src="./assets/avatar.png" width=100  >
 </p>
 
@@ -7,7 +7,7 @@
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/blob/main/LICENSE"><img src="https://img.shields.io/github/license/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="MIT License"></a>
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/stargazers"><img src="https://img.shields.io/github/stars/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Stargazers"></a>
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/network/members"><img src="https://img.shields.io/github/forks/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Forks"></a>
-</div>
+</div> -->
 
 <h1 align="center">AuraThemes Stealer</h1>
 
