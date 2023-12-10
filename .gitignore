@@ -24,8 +24,7 @@ yarn-error.log
 *.sublime-*
 
 # Ignore build output
-dist/
-build/
+build/script/*/*.js
 out/
 
 # Ignore application specific files
