@@ -37,7 +37,7 @@ git clone https://github.com/k4itrun/DiscordTokenGrabber.git
 cd DiscordTokenGrabber
 ```
 
-- Go to the [configuration](config/config.js) folder and add your webhook, when you add it simply initialize it
+- Go to the [configuration](src/config/config.js) folder and add your webhook, when you add it simply initialize it
 
 ```bash
 node index.js
