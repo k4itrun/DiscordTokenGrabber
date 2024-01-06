@@ -33,6 +33,8 @@ out/
 # Ignore dependencies, config files, and lock files
 package-lock.json
 yarn.lock
+jest.config.js
+.eslintrc.js
 .npmrc
 .npmignore
 
