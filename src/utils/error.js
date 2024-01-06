@@ -1,58 +1,41 @@
+const process = require("process");
 const readline = require("readline");
 const colors = require("colors");
-const process = require("process");
 
-function handleUnhandledRejection(reason, p) {
+function a(e, p) {
     console.log('\n\n\n\n\n=== [antiCrash] :: Unhandled Rejection/Catch ==='.toUpperCase().yellow.dim);
-    console.log('Reason: ', reason.stack ? String(reason.stack).gray : String(reason).gray);
+    console.log('Reason: ', e.stack ? String(e.stack).gray : String(e).gray);
     console.log('P: ', p.stack ? String(p.stack).gray : String(p).gray);
     console.log('=== Unhandled Rejection/Catch ===\n\n\n\n\n'.toUpperCase().yellow.dim);
 }
 
-function handleUncaughtException(err, origin) {
+function b(x, s) {
     console.log('\n\n\n\n\n\n=== [antiCrash] :: Uncaught Exception/Catch ==='.toUpperCase().yellow.dim);
-    console.log('Exception: ', err.stack ? String(err.stack).gray : String(err).gray);
-    console.log('Origin: ', origin.stack ? String(origin.stack).gray : String(origin).gray);
+    console.log('Exception: ', x.stack ? String(x.stack).gray : String(x).gray);
+    console.log('Origin: ', s.stack ? String(s.stack).gray : String(s).gray);
     console.log('=== Uncaught Exception/Catch ===\n\n\n\n\n'.toUpperCase().yellow.dim);
 }
 
-function handleUncaughtExceptionMonitor(err, origin) {
+function c(e, y) {
     console.log('\n\n\n\n\n\n===  [antiCrash] :: Uncaught Exception/Catch (MONITOR) ==='.toUpperCase().yellow.dim);
-    console.log('Exception: ', err.stack ? String(err.stack).gray : String(err).gray);
-    console.log('Origin: ', origin.stack ? String(origin.stack).gray : String(origin).gray);
+    console.log('Exception: ', e.stack ? String(e.stack).gray : String(e).gray);
+    console.log('Origin: ', y.stack ? String(y.stack).gray : String(y).gray);
     console.log('=== Uncaught Exception/Catch (MONITOR) ===\n\n\n\n\n\n'.toUpperCase().yellow.dim);
 }
 
-function handleWarningException(err) {
+function d(s) {
     console.log('\n\n\n\n\n\n===  [antiCrash] :: Warning Exception/Catch ==='.toUpperCase().yellow.dim);
-    console.log('Exception: ', err.stack ? String(err.stack).gray : String(err).gray);
+    console.log('Exception: ', s.stack ? String(s.stack).gray : String(s).gray);
     console.log('=== Warning Exception/Catch ===\n\n\n\n\n\n'.toUpperCase().yellow.dim);
 }
 
-function setupErrorHandlers() {
-    process.on('unhandledRejection', handleUnhandledRejection);
-    process.on("uncaughtException", handleUncaughtException);
-    process.on('uncaughtExceptionMonitor', handleUncaughtExceptionMonitor);
-    process.on('warning', handleWarningException);
-}
-
-function waitForExit() {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    rl.question("Press Enter to exit...", () => {
-        rl.close();
-        process.exit(0);
-    });
-}
-
-function initialize() {
-    setupErrorHandlers();
-    waitForExit();
+function setupError() {
+    process.on('unhandledRejection', a);
+    process.on("uncaughtException", b);
+    process.on('uncaughtExceptionMonitor', c);
+    process.on('warning', d);
 }
 
 module.exports = {
-    error: initialize
+    error: setupError
 };

