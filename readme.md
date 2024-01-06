@@ -1,5 +1,5 @@
-<!-- <p align="center">
-    <img src="./assets/avatar.png" width=100  >
+<p align="center">
+    <img src=".github/assets/avatar.png" width=100  >
 </p>
 
 <div align="center">
@@ -7,7 +7,7 @@
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/blob/main/LICENSE"><img src="https://img.shields.io/github/license/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="MIT License"></a>
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/stargazers"><img src="https://img.shields.io/github/stars/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Stargazers"></a>
 <a href="https://github.com/k4itrun/DiscordTokenGrabber/network/members"><img src="https://img.shields.io/github/forks/k4itrun/DiscordTokenGrabber.svg?style=for-the-badge&color=c267ff" alt="Forks"></a>
-</div> -->
+</div> 
 
 <h1 align="center">AuraThemes Stealer</h1>
 
@@ -73,10 +73,10 @@ node index.js
 
 ## Screenshots
 
-<img src="assets/11.png" width="500">
-<img src="assets/22.png" width="500">
-<img src="assets/33.png" width="500">
-<img src="assets/44.png" width="500">
+<img src=".github/assets/11.png" width="500">
+<img src=".github/assets/22.png" width="500">
+<img src=".github/assets/33.png" width="500">
+<img src=".github/assets/44.png" width="500">
 
 ## Disclaimer
 
