@@ -12,3 +12,4 @@ module.exports = function getconfig() {
         "injection": "yes", 
     }
 }
+// if you want something better, you can contact me, DIsocrd: k4itrunnnssh
